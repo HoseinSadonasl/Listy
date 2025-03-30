@@ -57,6 +57,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             api(project.dependencies.platform(libs.koin.bom))
             api(libs.koin.core)
+            api(libs.koin.annotations)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
@@ -70,6 +71,10 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ui.tooling.preview.desktop)
+        }
+
+        sourceSets.named("commonMain").configure {
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
 
         dependencies {
@@ -108,6 +113,8 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+    add("kspAndroid", libs.koin.ksp.compiler)
 }
 
 compose.desktop {
@@ -120,4 +127,8 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+ksp {
+    arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
 }
