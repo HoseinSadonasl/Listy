@@ -13,14 +13,15 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.3"
 junit = "4.13.2"
-kotlin = "2.1.10"
+kotlin = "2.0.21"
 kotlinx-coroutines = "1.10.1"
 koin-bom = "4.0.3"
-koin-annotation = "1.4.0-RC3"
+koin-annotation = "2.0.0"
+koin-ksp = "2.0.0"
 kotlinxDatetime = "0.6.2"
 navigationCompose = "2.8.0-alpha10"
 kotlinSerialization = "1.7.3"
-ksp = "2.0.20-1.0.24"
+ksp = "2.0.21-1.0.28"
 sqlite = "2.5.0-rc02"
 room = "2.7.0-rc02"
 
@@ -51,7 +52,7 @@ koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "
 koin-compose-androidx = { module = "io.insert-koin:koin-androidx-compose" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation" }
-koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler" }
+koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-ksp" }
 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

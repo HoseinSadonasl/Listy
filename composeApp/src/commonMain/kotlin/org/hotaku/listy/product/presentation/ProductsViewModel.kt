@@ -19,6 +19,10 @@ class ProductsViewModel : ViewModel() {
         )
         private set
 
+    fun onIntent(intent: ProductsScreenIntents) {
+
+    }
+
     private fun updateList() {
 
     }
