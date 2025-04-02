@@ -1,3 +1,4 @@
 <resources>
     <string name="products_screen_title">Listy</string>
+    <string name="empty_state_error_message">Unfortunately, all I know is that there's a problem.</string>
 </resources>

@@ -11,7 +11,7 @@ import org.hotaku.listy.product.presentation.UiProduct
 fun ProductItem(
     modifier: Modifier = Modifier,
     product: UiProduct,
-    onDoneChange: (Boolean) -> Unit,
+    onDoneClick: () -> Unit,
 ) {
     ListItem(
         headlineContent =  {
@@ -30,11 +30,7 @@ fun ProductItem(
                 text = product.emoji,
             )
         },
-        trailingContent =  {
-            Checkbox(
-                checked = product.done,
-                onCheckedChange = { onDoneChange(!product.done) },
-            )
-        },
+        trailingContent = product.done.takeIf { it == false }
+            ?.let { { Checkbox(checked = it, onCheckedChange = { onDoneClick::invoke }) } },
     )
 }
