@@ -32,6 +32,7 @@ fun ProductsScreenContent(
     onIntent: (ProductsScreenIntents) -> Unit
 ) {
     ProductsScreenScaffold(
+        modifier = modifier,
         onAddClick = { onIntent(OnAddItemClick) },
         content = {
             when (state) {

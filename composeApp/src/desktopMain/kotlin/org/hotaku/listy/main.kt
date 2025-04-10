@@ -2,13 +2,16 @@ package org.hotaku.listy
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.hotaku.listy.di.initKoin
 
-fun main() = application {
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = "Listy",
-    ) {
-        App()
+fun main() {
+    initKoin()
+    application {
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "Listy",
+        ) {
+            App()
+        }
     }
 }
