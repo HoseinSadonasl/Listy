@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.hotaku.listy.category.data.dao.CategoryDao
 import org.hotaku.listy.category.domain.Category
-import org.hotaku.listy.category.domain.CategoryRepository
+import org.hotaku.listy.category.domain.CategoreisRepository
 
-class CategoryRepositoryImpl(
+class CategoreisRepositoryImpl(
     private val categoryDao: CategoryDao,
-): CategoryRepository {
+): CategoreisRepository {
     override fun getCategories(): Flow<List<Category>> =
         categoryDao.getCategories().map { categories ->
             categories.map { it.asCategory() }

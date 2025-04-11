@@ -10,8 +10,9 @@ import org.hotaku.listy.core.presentation.UiState
 import org.hotaku.listy.core.presentation.UiText
 import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
-class ProductsViewModel : ViewModel() {
+class ProductsViewModel(
+
+) : ViewModel() {
     var state = MutableStateFlow<UiState<ProductScreenState, UiText>>(UiState.Idle)
         .onStart { updateList() }
         .stateIn(
