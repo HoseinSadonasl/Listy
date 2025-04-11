@@ -1,7 +1,9 @@
 package org.hotaku.listy.category.domain
 
+import kotlinx.coroutines.flow.Flow
+
 interface CategoryRepository {
-    fun getCategories(): Result<List<Category>>
-    fun addCateGory(category: Category)
-    fun deleteCateGory(category: Category)
+    fun getCategories(): Flow<List<Category>>
+    suspend fun addCateGory(category: Category)
+    suspend fun deleteCateGory(category: Category)
 }

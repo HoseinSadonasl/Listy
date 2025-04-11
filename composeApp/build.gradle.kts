@@ -74,6 +74,11 @@ kotlin {
             implementation(libs.ui.tooling.preview.desktop)
         }
 
+        nativeMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+
+        }
+
         sourceSets.named("commonMain").configure {
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
