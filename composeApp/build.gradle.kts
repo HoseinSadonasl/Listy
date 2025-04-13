@@ -75,7 +75,6 @@ kotlin {
         }
 
         nativeMain.dependencies {
-            implementation(libs.kotlinx.coroutines.swing)
 
         }
 

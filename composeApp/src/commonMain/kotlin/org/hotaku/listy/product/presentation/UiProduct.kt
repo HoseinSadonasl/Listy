@@ -7,7 +7,7 @@ data class UiProduct(
     val id: Int,
     val name: String,
     val description: String,
-    val emoji: String,
+    val emoji: String = "\uD83D\uDECD\uFE0F",
     val categoryId: Int,
     val done: Boolean,
     val dateCreated: Instant,

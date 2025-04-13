@@ -1,5 +1,7 @@
 package org.hotaku.listy.product.presentation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -7,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.hotaku.listy.core.presentation.UiState
 import org.hotaku.listy.core.presentation.UiText
 import org.hotaku.listy.product.presentation.ProductsScreenIntents.*
+import org.hotaku.listy.product.presentation.composables.EditProduct
 import org.hotaku.listy.product.presentation.composables.ErrorState
 import org.hotaku.listy.product.presentation.composables.LoadingState
 import org.hotaku.listy.product.presentation.composables.ProductsCategoriesTabs
@@ -25,6 +28,7 @@ fun ProductsScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsScreenContent(
     modifier: Modifier = Modifier,
@@ -33,7 +37,7 @@ fun ProductsScreenContent(
 ) {
     ProductsScreenScaffold(
         modifier = modifier,
-        onAddClick = { onIntent(OnAddItemClick) },
+        onAddClick = { onIntent(OnOpenEditItemSheet()) },
         content = {
             when (state) {
                 is UiState.Error -> ErrorState(message = state.error)
@@ -42,6 +46,39 @@ fun ProductsScreenContent(
 
                 UiState.Loading -> LoadingState()
                 is UiState.Success -> {
+                    if (state.data.isBottomSheetOpen) {
+                        ModalBottomSheet(
+                            onDismissRequest = { onIntent(OnBottomSheetDismiss) },
+                            content = {
+                                EditProduct(
+                                    product = state.data.product,
+                                    onEmojiChange = { emoji ->
+                                        onIntent(
+                                            OnEmojiChange(
+                                                query = emoji
+                                            )
+                                        )
+                                    },
+                                    onTitleChange = { title ->
+                                        onIntent(
+                                            OnProductTitleChange(
+                                                query = title
+                                            )
+                                        )
+                                    },
+                                    onDescriptionChange = { description ->
+                                        onIntent(
+                                            OnProductDescriptionChange(
+                                                query = description
+                                            )
+                                        )
+                                    },
+                                    onSaveProduct = { onIntent(OnSaveProduct) },
+                                    onDelete = { onIntent(OnDeleteProduct) }
+                                )
+                            }
+                        )
+                    }
                     ProductsCategoriesTabs(
                         tabs = state.data.categories,
                         selectedTabIndex = state.data.selectedTabIndex,
@@ -49,6 +86,13 @@ fun ProductsScreenContent(
                     )
                     ProductsList(
                         products = state.data.products,
+                        onProductItemClick = { product ->
+                            onIntent(
+                                OnOpenEditItemSheet(
+                                    product = product
+                                )
+                            )
+                        },
                         onDoneClick = { product ->
                             onIntent(
                                 OnDoneClick(

@@ -1,5 +1,6 @@
 package org.hotaku.listy.product.presentation.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,7 @@ import org.hotaku.listy.product.presentation.UiProduct
 fun ProductsList(
     modifier: Modifier = Modifier,
     products: List<UiProduct>,
+    onProductItemClick: (UiProduct) -> Unit,
     onDoneClick: (UiProduct) -> Unit,
 ) {
     LazyColumn(
@@ -21,6 +23,7 @@ fun ProductsList(
             key = { it.id }
         ) { product ->
             ProductItem(
+                modifier = Modifier.clickable { onProductItemClick(product) },
                 product = product,
                 onDoneClick = { onDoneClick(product) }
             )

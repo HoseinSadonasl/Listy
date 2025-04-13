@@ -3,6 +3,10 @@ package org.hotaku.listy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import org.hotaku.listy.product.presentation.UiProduct
+import org.hotaku.listy.product.presentation.composables.EditProduct
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
