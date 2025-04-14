@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
-import org.hotaku.listy.product.data.ProductEntity
+import org.hotaku.listy.product.data.model.ProductEntity
 
 @Dao
 interface ProductsDao {

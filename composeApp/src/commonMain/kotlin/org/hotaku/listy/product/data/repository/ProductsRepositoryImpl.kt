@@ -1,10 +1,12 @@
-package org.hotaku.listy.product.data
+package org.hotaku.listy.product.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.hotaku.listy.product.data.dao.ProductsDao
-import org.hotaku.listy.product.domain.Product
-import org.hotaku.listy.product.domain.ProductsRepository
+import org.hotaku.listy.product.data.model.asEntity
+import org.hotaku.listy.product.data.model.asProduct
+import org.hotaku.listy.product.domain.model.Product
+import org.hotaku.listy.product.domain.repository.ProductsRepository
 
 class ProductsRepositoryImpl(
     private val productsDao: ProductsDao,

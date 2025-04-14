@@ -1,4 +1,4 @@
-package org.hotaku.listy.category.domain
+package org.hotaku.listy.category.domain.model
 
 data class Category(
     val id: Int,

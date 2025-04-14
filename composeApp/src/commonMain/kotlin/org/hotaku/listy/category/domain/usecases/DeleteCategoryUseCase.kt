@@ -1,4 +1,7 @@
-package org.hotaku.listy.category.domain
+package org.hotaku.listy.category.domain.usecases
+
+import org.hotaku.listy.category.domain.model.Category
+import org.hotaku.listy.category.domain.repository.CategoreisRepository
 
 class DeleteCategoryUseCase(
     private val categoriesRepository: CategoreisRepository,

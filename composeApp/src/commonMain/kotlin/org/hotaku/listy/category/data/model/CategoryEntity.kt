@@ -1,8 +1,8 @@
-package org.hotaku.listy.category.data
+package org.hotaku.listy.category.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.hotaku.listy.category.domain.Category
+import org.hotaku.listy.category.domain.model.Category
 
 @Entity(tableName = "categories")
 data class CategoryEntity(

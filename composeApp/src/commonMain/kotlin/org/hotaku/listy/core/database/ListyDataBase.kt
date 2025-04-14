@@ -4,9 +4,9 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import org.hotaku.listy.category.data.dao.CategoryDao
-import org.hotaku.listy.category.data.CategoryEntity
+import org.hotaku.listy.category.data.model.CategoryEntity
 import org.hotaku.listy.product.data.dao.ProductsDao
-import org.hotaku.listy.product.data.ProductEntity
+import org.hotaku.listy.product.data.model.ProductEntity
 
 @Database(
     entities = [ProductEntity::class, CategoryEntity::class],

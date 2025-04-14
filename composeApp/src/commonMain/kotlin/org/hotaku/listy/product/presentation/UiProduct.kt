@@ -1,7 +1,7 @@
 package org.hotaku.listy.product.presentation
 
 import kotlinx.datetime.Instant
-import org.hotaku.listy.product.domain.Product
+import org.hotaku.listy.product.domain.model.Product
 
 data class UiProduct(
     val id: Int,

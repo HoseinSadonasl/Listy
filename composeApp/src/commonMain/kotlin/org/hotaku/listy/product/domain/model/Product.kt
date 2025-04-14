@@ -1,4 +1,4 @@
-package org.hotaku.listy.product.domain
+package org.hotaku.listy.product.domain.model
 
 data class Product(
     val id: Int,

@@ -1,6 +1,6 @@
 package org.hotaku.listy.category.presentation
 
-import org.hotaku.listy.category.domain.Category
+import org.hotaku.listy.category.domain.model.Category
 
 data class UiCategory(
     val id: Int,

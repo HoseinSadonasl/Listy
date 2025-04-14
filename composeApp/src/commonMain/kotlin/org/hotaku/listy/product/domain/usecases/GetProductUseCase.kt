@@ -1,4 +1,6 @@
-package org.hotaku.listy.product.domain
+package org.hotaku.listy.product.domain.usecases
+
+import org.hotaku.listy.product.domain.repository.ProductsRepository
 
 class GetProductUseCase(
     private val productsRepository: ProductsRepository,

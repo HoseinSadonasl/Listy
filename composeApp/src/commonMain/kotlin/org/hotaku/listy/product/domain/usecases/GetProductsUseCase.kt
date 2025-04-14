@@ -1,6 +1,8 @@
-package org.hotaku.listy.product.domain
+package org.hotaku.listy.product.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
+import org.hotaku.listy.product.domain.model.Product
+import org.hotaku.listy.product.domain.repository.ProductsRepository
 
 class GetProductsUseCase(
     private val productsRepository: ProductsRepository,

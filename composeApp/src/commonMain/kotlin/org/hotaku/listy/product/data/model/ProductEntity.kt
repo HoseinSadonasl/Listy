@@ -1,8 +1,8 @@
-package org.hotaku.listy.product.data
+package org.hotaku.listy.product.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.hotaku.listy.product.domain.Product
+import org.hotaku.listy.product.domain.model.Product
 
 @Entity(tableName = "products")
 data class ProductEntity(
