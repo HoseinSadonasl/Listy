@@ -13,13 +13,12 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.empty_state_error_message
-import org.hotaku.listy.core.presentation.UiText
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorState(
     modifier: Modifier = Modifier,
-    message: UiText? = null,
+    message: String? = null,
 ) {
     Column(
         modifier = modifier,
@@ -32,7 +31,7 @@ fun ErrorState(
         )
         Text(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            text = message?.asString() ?: stringResource(Res.string.empty_state_error_message)
+            text = message ?: stringResource(Res.string.empty_state_error_message)
         )
     }
 }
