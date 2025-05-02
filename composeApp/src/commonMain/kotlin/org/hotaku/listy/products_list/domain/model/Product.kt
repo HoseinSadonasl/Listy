@@ -1,7 +1,7 @@
-package org.hotaku.listy.product.domain.model
+package org.hotaku.listy.products_list.domain.model
 
 data class Product(
-    val id: Int,
+    val id: Int?,
     val name: String,
     val description: String,
     val emoji: String,

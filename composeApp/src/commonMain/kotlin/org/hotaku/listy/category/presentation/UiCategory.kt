@@ -3,7 +3,7 @@ package org.hotaku.listy.category.presentation
 import org.hotaku.listy.category.domain.model.Category
 
 data class UiCategory(
-    val id: Int,
+    val id: Int? = null,
     val name: String,
 )
 

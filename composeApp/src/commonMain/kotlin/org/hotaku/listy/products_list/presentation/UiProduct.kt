@@ -1,10 +1,10 @@
-package org.hotaku.listy.product.presentation
+package org.hotaku.listy.products_list.presentation
 
 import kotlinx.datetime.Instant
-import org.hotaku.listy.product.domain.model.Product
+import org.hotaku.listy.products_list.domain.model.Product
 
 data class UiProduct(
-    val id: Int,
+    val id: Int? = null,
     val name: String,
     val description: String,
     val emoji: String = "\uD83D\uDECD\uFE0F",
