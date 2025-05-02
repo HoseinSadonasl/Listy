@@ -3,8 +3,6 @@ package org.hotaku.listy.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +17,7 @@ import org.hotaku.listy.category.presentation.UiCategory
 import org.hotaku.listy.category.presentation.asCategory
 import org.hotaku.listy.category.presentation.asUiCategory
 import org.hotaku.listy.product.ProductScreenEvents.NavigateBack
-import org.hotaku.listy.product.ProductScreenIntent.*
+import org.hotaku.listy.product.ProductScreenIntents.*
 import org.hotaku.listy.products_list.domain.model.Product
 import org.hotaku.listy.products_list.domain.usecases.AddProductUseCase
 import org.hotaku.listy.products_list.domain.usecases.DeleteProductUseCase
@@ -47,7 +45,7 @@ class ProductViewModel(
     private var _event = Channel<ProductScreenEvents>()
     val event = _event.receiveAsFlow()
 
-    fun onIntent(intent: ProductScreenIntent) {
+    fun onIntent(intent: ProductScreenIntents) {
         when (intent) {
             OnSaveClick -> saveProduct()
             OnBackClick -> sendEvent(event = NavigateBack)

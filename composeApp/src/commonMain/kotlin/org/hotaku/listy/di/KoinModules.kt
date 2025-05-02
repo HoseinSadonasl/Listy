@@ -4,7 +4,7 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import org.hotaku.listy.category.data.dao.CategoryDao
 import org.hotaku.listy.core.database.DatabaseFactory
 import org.hotaku.listy.core.database.ListyDataBase
-import org.hotaku.listy.product.data.dao.ProductsDao
+import org.hotaku.listy.products_list.data.dao.ProductsDao
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

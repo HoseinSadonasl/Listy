@@ -16,7 +16,7 @@ class CategoreisRepositoryImpl(
             categories.map { it.asCategory() }
         }
 
-    override suspend fun addCateGory(category: Category) =
+    override suspend fun upsertCategory(category: Category) =
         categoryDao.upsertCategory(category = category.asEntity())
 
     override suspend fun deleteCateGory(category: Category) =

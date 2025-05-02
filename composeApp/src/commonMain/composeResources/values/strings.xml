@@ -3,8 +3,10 @@
     <string name="empty_state_error_message">Unfortunately, all I know is that there's a problem.</string>
     <string name="all_button_save">Save</string>
     <string name="all_button_cancel">Cancel</string>
-    <string name="all_button_mark_as_done">Mark as done</string>
+    <string name="all_button_delete">Delete</string>
+    <string name="product_screen_complete">Complete</string>
     <string name="add_product_title_placeholder">Title</string>
     <string name="add_product_description_placeholder">Description</string>
     <string name="load_data_error">Failed to load data \n%1$s</string>
+    <string name="product_screen_title">New Product</string>
 </resources>

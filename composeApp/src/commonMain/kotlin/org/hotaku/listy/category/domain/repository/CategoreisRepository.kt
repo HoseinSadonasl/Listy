@@ -5,6 +5,6 @@ import org.hotaku.listy.category.domain.model.Category
 
 interface CategoreisRepository {
     fun getCategories(): Flow<List<Category>>
-    suspend fun addCateGory(category: Category)
+    suspend fun upsertCategory(category: Category)
     suspend fun deleteCateGory(category: Category)
 }

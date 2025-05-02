@@ -6,7 +6,7 @@ import org.hotaku.listy.category.domain.model.Category
 
 @Entity(tableName = "categories")
 data class CategoryEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val name: String,
 )
 
