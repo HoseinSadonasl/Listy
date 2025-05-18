@@ -1,13 +1,13 @@
 package org.hotaku.listy.di
 
-import org.hotaku.listy.product_detail.ProductDetailViewModel
-import org.hotaku.listy.products_list.data.repository.ProductsRepositoryImpl
-import org.hotaku.listy.products_list.domain.usecases.UpsertProductUseCase
-import org.hotaku.listy.products_list.domain.usecases.DeleteProductUseCase
-import org.hotaku.listy.products_list.domain.usecases.GetProductsUseCase
-import org.hotaku.listy.products_list.domain.repository.ProductsRepository
-import org.hotaku.listy.products_list.domain.usecases.GetProductUseCase
-import org.hotaku.listy.products_list.presentation.ProductsViewModel
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailViewModel
+import org.hotaku.listy.product.data.repository.ProductsRepositoryImpl
+import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
+import org.hotaku.listy.product.domain.usecases.DeleteProductUseCase
+import org.hotaku.listy.product.domain.usecases.GetProductsUseCase
+import org.hotaku.listy.product.domain.repository.ProductsRepository
+import org.hotaku.listy.product.domain.usecases.GetProductUseCase
+import org.hotaku.listy.product.presentation.product_list.ProductListViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -24,6 +24,6 @@ val productsModule = module {
     singleOf(::UpsertProductUseCase)
     singleOf(::DeleteProductUseCase)
 
-    viewModelOf(::ProductsViewModel)
+    viewModelOf(::ProductListViewModel)
     viewModelOf(::ProductDetailViewModel)
 }

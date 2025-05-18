@@ -8,10 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.hotaku.listy.product_detail.ProductDetailScreenRoute
-import org.hotaku.listy.product_detail.ProductDetailScreen
-import org.hotaku.listy.products_list.presentation.ProductsScreen
-import org.hotaku.listy.products_list.presentation.ProductsScreenRoute
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreen
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenRoute
+import org.hotaku.listy.product.presentation.product_list.ProductListScreen
+import org.hotaku.listy.product.presentation.product_list.ProductListScreenRoute
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -22,10 +22,10 @@ fun App(
     MaterialTheme {
         NavHost(
             navController = navController,
-            startDestination = ProductsScreenRoute
+            startDestination = ProductListScreenRoute
         ) {
-            composable<ProductsScreenRoute> {
-                ProductsScreen(
+            composable<ProductListScreenRoute> {
+                ProductListScreen(
                     navigateToProductScreen = { id ->
                         navController.navigate(ProductDetailScreenRoute(productId = id))
                     }
