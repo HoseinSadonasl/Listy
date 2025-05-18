@@ -1,4 +1,4 @@
-package org.hotaku.listy.product.composables
+package org.hotaku.listy.product_detail.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,9 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Clock.System
-import kotlinx.datetime.Instant
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.add_product_description_placeholder
 import listy.composeapp.generated.resources.all_button_delete

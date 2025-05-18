@@ -1,4 +1,4 @@
-package org.hotaku.listy.product.composables
+package org.hotaku.listy.product_detail.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import org.hotaku.listy.products_list.presentation.composables.TopBar
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ProductScreenScaffold(
+fun ProductDetailScreenScaffold(
     modifier: Modifier = Modifier,
     title: String? = null,
     onNavigateBack: () -> Unit,

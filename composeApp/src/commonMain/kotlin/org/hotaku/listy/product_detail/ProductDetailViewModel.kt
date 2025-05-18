@@ -1,4 +1,4 @@
-package org.hotaku.listy.product
+package org.hotaku.listy.product_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -18,8 +18,8 @@ import org.hotaku.listy.category.domain.usecases.GetCategoriesUseCase
 import org.hotaku.listy.category.presentation.UiCategory
 import org.hotaku.listy.category.presentation.asCategory
 import org.hotaku.listy.category.presentation.asUiCategory
-import org.hotaku.listy.product.ProductScreenEvents.*
-import org.hotaku.listy.product.ProductScreenIntents.*
+import org.hotaku.listy.product_detail.ProductDetailScreenEvent.*
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.*
 import org.hotaku.listy.products_list.domain.model.Product
 import org.hotaku.listy.products_list.domain.usecases.UpsertProductUseCase
 import org.hotaku.listy.products_list.domain.usecases.DeleteProductUseCase
@@ -27,9 +27,8 @@ import org.hotaku.listy.products_list.domain.usecases.GetProductUseCase
 import org.hotaku.listy.products_list.presentation.UiProduct
 import org.hotaku.listy.products_list.presentation.asProduct
 import org.hotaku.listy.products_list.presentation.asUiProduct
-import kotlin.coroutines.cancellation.CancellationException
 
-class ProductViewModel(
+class ProductDetailViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getProductUseCase: GetProductUseCase,
     private val addCategoryUseCase: AddCategoryUseCase,
@@ -38,7 +37,7 @@ class ProductViewModel(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ProductScreenState())
+    private val _state = MutableStateFlow(ProductDetailScreenState())
     val state = _state
         .onStart {
             getProductIfExist()
@@ -49,33 +48,33 @@ class ProductViewModel(
             initialValue = _state.value
         )
 
-    private var _event = Channel<ProductScreenEvents>()
+    private var _event = Channel<ProductDetailScreenEvent>()
     val event = _event.receiveAsFlow()
 
-    fun onIntent(intent: ProductScreenIntents) {
+    fun onIntent(intent: ProductDetailScreenIntent) {
         when (intent) {
             OnSaveClick -> saveProduct()
             OnBackClick -> sendEvent(event = NavigateBack)
             OnDeleteClick -> deleteProduct()
             OnDoneClick -> setProductDone()
-            is OnProductDescriptionChanged -> setProductDescription(description = intent.description)
-            is OnProductNameChanged -> setProductName(name = intent.name)
+            is OnProductDetailDescriptionChanged -> setProductDescription(description = intent.description)
+            is OnProductDetailNameChanged -> setProductName(name = intent.name)
             OnNewCategory -> createNewCategory()
             OnEditCategory -> editCategory()
             OnSaveCategory -> upsertCategory()
             is OnCategoryNameChange -> setCategoryName(query = intent.categoryName)
-            is OnProductDoneChanged -> {}
+            is OnProductDetailDoneChanged -> {}
         }
     }
 
-    private fun sendEvent(event: ProductScreenEvents) {
+    private fun sendEvent(event: ProductDetailScreenEvent) {
         viewModelScope.launch {
             _event.send(event)
         }
     }
 
     private fun getProductIfExist() {
-        val productId = savedStateHandle.toRoute<ProductScreenRoute>().productId
+        val productId = savedStateHandle.toRoute<ProductDetailScreenRoute>().productId
         productId?.let {
             _state.update { it.copy(isLoading = true) }
             viewModelScope.launch {

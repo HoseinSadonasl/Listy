@@ -1,4 +1,4 @@
-package org.hotaku.listy.product.composables
+package org.hotaku.listy.product_detail.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

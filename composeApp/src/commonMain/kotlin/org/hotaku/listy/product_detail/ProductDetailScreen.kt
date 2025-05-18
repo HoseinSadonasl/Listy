@@ -1,4 +1,4 @@
-package org.hotaku.listy.product
+package org.hotaku.listy.product_detail
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -10,23 +10,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.datetime.Clock
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
-import org.hotaku.listy.product.ProductScreenIntents.OnDeleteClick
-import org.hotaku.listy.product.ProductScreenIntents.OnDoneClick
-import org.hotaku.listy.product.ProductScreenIntents.OnNewCategory
-import org.hotaku.listy.product.ProductScreenIntents.OnProductDescriptionChanged
-import org.hotaku.listy.product.ProductScreenIntents.OnProductNameChanged
-import org.hotaku.listy.product.ProductScreenIntents.OnSaveClick
-import org.hotaku.listy.product.composables.CategoryList
-import org.hotaku.listy.product.composables.EditProduct
-import org.hotaku.listy.product.composables.ProductScreenScaffold
-import org.hotaku.listy.product.composables.categories
+import org.hotaku.listy.product_detail.ProductDetailScreenEvent.NavigateBack
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.OnDeleteClick
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.OnDoneClick
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.OnNewCategory
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.OnProductDetailDescriptionChanged
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.OnProductDetailNameChanged
+import org.hotaku.listy.product_detail.ProductDetailScreenIntent.OnSaveClick
+import org.hotaku.listy.product_detail.composables.CategoryList
+import org.hotaku.listy.product_detail.composables.EditProduct
+import org.hotaku.listy.product_detail.composables.ProductDetailScreenScaffold
+import org.hotaku.listy.product_detail.composables.categories
 import org.hotaku.listy.products_list.presentation.UiProduct
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ProductScreen(
-    viewModel: ProductViewModel = koinViewModel(),
+fun ProductDetailScreen(
+    viewModel: ProductDetailViewModel = koinViewModel(),
     onBackClick: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -34,12 +35,12 @@ fun ProductScreen(
     LaunchedEffect(viewModel.event) {
         viewModel.event.collectLatest { event ->
             when (event) {
-                is ProductScreenEvents.NavigateBack -> onBackClick()
+                is NavigateBack -> onBackClick()
             }
         }
     }
 
-    ProductScreenContent(
+    ProductDetailScreenContent(
         state = state,
         onBackClick = onBackClick,
         onIntent = viewModel::onIntent,
@@ -47,12 +48,12 @@ fun ProductScreen(
 }
 
 @Composable
-fun ProductScreenContent(
-    state: ProductScreenState,
+fun ProductDetailScreenContent(
+    state: ProductDetailScreenState,
     onBackClick: () -> Unit,
-    onIntent: (ProductScreenIntents) -> Unit,
+    onIntent: (ProductDetailScreenIntent) -> Unit,
 ) {
-    ProductScreenScaffold(
+    ProductDetailScreenScaffold(
         title = state.product?.name,
         onNavigateBack = onBackClick,
         content = {
@@ -69,10 +70,10 @@ fun ProductScreenContent(
             EditProduct(
                 modifier = Modifier.padding(16.dp),
                 onTitleChange = { name ->
-                    onIntent(OnProductNameChanged(name = name))
+                    onIntent(OnProductDetailNameChanged(name = name))
                 },
                 onDescriptionChange = { description ->
-                    onIntent(OnProductDescriptionChanged(description = description))
+                    onIntent(OnProductDetailDescriptionChanged(description = description))
 
                 },
                 onSaveProduct = { onIntent(OnSaveClick) },
@@ -87,8 +88,8 @@ fun ProductScreenContent(
 @Preview
 @Composable
 fun ProductScreenPreview() {
-    ProductScreenContent(
-        state = ProductScreenState(
+    ProductDetailScreenContent(
+        state = ProductDetailScreenState(
             product = UiProduct(
                 id = 1,
                 name = "Product 1",
