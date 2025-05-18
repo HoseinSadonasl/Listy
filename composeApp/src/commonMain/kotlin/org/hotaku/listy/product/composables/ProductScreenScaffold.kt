@@ -1,26 +1,22 @@
 package org.hotaku.listy.product.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.product_screen_title
-import listy.composeapp.generated.resources.products_screen_title
 import org.hotaku.listy.core.presentation.brightGreen
-import org.hotaku.listy.core.presentation.composables.IconButton
+import org.hotaku.listy.core.presentation.powder
 import org.hotaku.listy.products_list.presentation.composables.TopBar
 import org.jetbrains.compose.resources.stringResource
 
@@ -40,16 +36,29 @@ fun ProductScreenScaffold(
             )
         },
         containerColor = brightGreen,
+        contentColor = powder,
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background),
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
             ) {
-                content()
+                Card(
+                    modifier = Modifier,
+                    colors = CardDefaults.cardColors().copy(
+                        containerColor = powder,
+                    ),
+                    shape = RoundedCornerShape(
+                        topStart = 16.dp,
+                        topEnd = 16.dp,
+                        bottomStart = 0.dp,
+                        bottomEnd = 0.dp,
+                    )
+                ) {
+                    content()
+                }
             }
         },
     )

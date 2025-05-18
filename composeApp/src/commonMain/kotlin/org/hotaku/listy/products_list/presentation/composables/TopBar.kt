@@ -33,6 +33,8 @@ fun TopBar(
         },
         colors = TopAppBarDefaults.topAppBarColors().copy(
             containerColor = brightGreen,
+            navigationIconContentColor = powder,
+            actionIconContentColor = powder,
             titleContentColor = powder
         )
     )

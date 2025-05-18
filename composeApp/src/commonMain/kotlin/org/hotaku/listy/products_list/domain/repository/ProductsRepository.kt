@@ -5,6 +5,7 @@ import org.hotaku.listy.products_list.domain.model.Product
 
 interface ProductsRepository {
     fun getProducts(categoryId: Int?): Flow<List<Product>>
-    suspend fun addProduct(product: Product)
+    suspend fun getProduct(productId: Int): Product
+    suspend fun upsertProduct(product: Product)
     suspend fun deleteProduct(product: Product)
 }

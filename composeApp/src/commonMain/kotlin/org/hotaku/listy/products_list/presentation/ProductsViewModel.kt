@@ -2,34 +2,36 @@ package org.hotaku.listy.products_list.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock.System
-import org.hotaku.listy.category.domain.usecases.AddCategoryUseCase
+import kotlinx.datetime.Clock
 import org.hotaku.listy.category.domain.usecases.DeleteCategoryUseCase
 import org.hotaku.listy.category.domain.usecases.GetCategoriesUseCase
 import org.hotaku.listy.category.presentation.asUiCategory
 import org.hotaku.listy.products_list.domain.model.Product
-import org.hotaku.listy.products_list.domain.usecases.AddProductUseCase
-import org.hotaku.listy.products_list.domain.usecases.DeleteProductUseCase
+import org.hotaku.listy.products_list.domain.usecases.UpsertProductUseCase
 import org.hotaku.listy.products_list.domain.usecases.GetProductsUseCase
-import org.hotaku.listy.products_list.presentation.ProductsScreenIntents.*
+import org.hotaku.listy.products_list.presentation.ProductsScreenEvents.NavigateToProductScreen
+import org.hotaku.listy.products_list.presentation.ProductsScreenIntents.OnDoneClick
+import org.hotaku.listy.products_list.presentation.ProductsScreenIntents.OnNewProduct
+import org.hotaku.listy.products_list.presentation.ProductsScreenIntents.OnTabClick
 
 class ProductsViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val getProductsUseCase: GetProductsUseCase,
-    private val addProductUseCase: AddProductUseCase,
-    private val deleteProductUseCase: DeleteProductUseCase,
+    private val upsertProductUseCase: UpsertProductUseCase,
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow<ProductScreenState>(ProductScreenState())
+    private var _state = MutableStateFlow<ProductsScreenState>(ProductsScreenState())
     val state = _state
         .onStart {
             updateList()
@@ -40,83 +42,38 @@ class ProductsViewModel(
             initialValue = _state.value
         )
 
+    private val _event = Channel<ProductsScreenEvents>()
+    val event = _event.receiveAsFlow()
+
     fun onIntent(intent: ProductsScreenIntents) {
         when (intent) {
-            is OnOpenEditItemSheet -> updateEditItemSheetState(isOpen = true, product = intent.product)
-            OnBottomSheetDismiss -> updateEditItemSheetState(isOpen = false, product = null)
             OnNewProduct -> initNewProduct()
             is OnTabClick -> setSelectedTab(tabIndex = intent.tabIndex)
-            is OnDoneClick -> setProductDone(product = intent.product)
-            is OnEmojiChange -> setProductEmoji(emoji = intent.query)
-            is OnProductTitleChange -> setProductName(name = intent.query)
-            is OnProductDescriptionChange -> setProductDescription(description = intent.query)
-            OnSaveProduct -> saveProduct()
-            OnDeleteProduct -> deleteProduct()
-            OnNewCategory -> showNewCategorySheet()
-            is OnNewCategoryNameChange -> onCategoryNameChange(query = intent.query)
+            is OnDoneClick -> setProductDone(productId = intent.productId)
+            is ProductsScreenIntents.OnProductItemClick -> onOpenProduct(productId = intent.productId)
         }
     }
 
-    private fun onCategoryNameChange(query: String) {
-
-    }
-
-    private fun showNewCategorySheet() {
-
-    }
-
-    private fun deleteProduct() {
-        _state.value.product?.let { product ->
-            viewModelScope.launch {
-                deleteProductUseCase(product = product.asProduct())
-                updateEditItemSheetState(isOpen = false, product = null)
-            }
+    private fun onOpenProduct(productId: Int) {
+        viewModelScope.launch {
+            _event.send(NavigateToProductScreen(productId = productId))
         }
     }
 
-    private fun saveProduct() {
-        _state.value.product?.let { product ->
-            val newProduct = product.asProduct().copy(
-                categoryId = _state.value.categoryId ?: 0,
-                done = false
-            )
-            upsertProduct(product = newProduct)
-            updateEditItemSheetState(isOpen = false, product = null)
+    private fun setProductDone(productId: Int) {
+        val product = findProductById(id = productId)
+        product?.let {
+            upsertProduct(product = it.copy(done = true))
         }
     }
 
-    private fun setProductDescription(description: String) {
-        _state.update {
-            it.copy(
-                product = it.product?.copy(description = description)
-            )
-        }
-    }
-
-    private fun setProductName(name: String) {
-        _state.update {
-            it.copy(
-                product = it.product?.copy(name = name)
-            )
-        }
-    }
-
-    private fun setProductEmoji(emoji: String) {
-       _state.update {
-            it.copy(
-                product = it.product?.copy(emoji = emoji)
-            )
-        }
-    }
-
-    private fun setProductDone(product: UiProduct) {
-        val doneProduct = product.asProduct().copy(done = true)
-        upsertProduct(product = doneProduct)
-    }
+    private fun findProductById(id: Int): Product? = _state.value.products.find {
+        id == it.categoryId
+    }?.asProduct()
 
     private fun upsertProduct(product: Product) {
         viewModelScope.launch {
-            addProductUseCase(product = product)
+            upsertProductUseCase(product = product)
         }
     }
 
@@ -129,26 +86,8 @@ class ProductsViewModel(
     }
 
     private fun initNewProduct() {
-        _state.update {
-            it.copy(
-                isBottomSheetOpen = true,
-                product = UiProduct(
-                    name = "",
-                    description = "",
-                    categoryId = 1,
-                    done = false,
-                    dateCreated = System.now()
-                )
-            )
-        }
-    }
-
-    private fun updateEditItemSheetState(isOpen: Boolean, product: UiProduct?) {
-        _state.update {
-            it.copy(
-                isBottomSheetOpen = isOpen,
-                product = product
-            )
+        viewModelScope.launch {
+            _event.send(NavigateToProductScreen())
         }
     }
 

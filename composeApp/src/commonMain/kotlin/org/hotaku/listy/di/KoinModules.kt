@@ -1,6 +1,8 @@
 package org.hotaku.listy.di
 
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.hotaku.listy.category.data.dao.CategoryDao
 import org.hotaku.listy.core.database.DatabaseFactory
 import org.hotaku.listy.core.database.ListyDataBase
@@ -14,6 +16,7 @@ val commonModule = module {
     single {
         get<DatabaseFactory>().create()
             .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
             .build()
     }
 

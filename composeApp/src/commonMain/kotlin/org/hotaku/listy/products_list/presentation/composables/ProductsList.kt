@@ -11,8 +11,8 @@ import org.hotaku.listy.products_list.presentation.UiProduct
 fun ProductsList(
     modifier: Modifier = Modifier,
     products: List<UiProduct>,
-    onProductItemClick: (UiProduct) -> Unit,
-    onDoneClick: (UiProduct) -> Unit,
+    onProductItemClick: (Int) -> Unit,
+    onDoneClick: (Int) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -22,9 +22,9 @@ fun ProductsList(
             key = { it.id!! }
         ) { product ->
             ProductItem(
-                modifier = Modifier.clickable { onProductItemClick(product) },
+                modifier = Modifier.clickable { onProductItemClick(product.id!!) },
                 product = product,
-                onDoneClick = { onDoneClick(product) }
+                onDoneClick = { onDoneClick(product.id!!) }
             )
         }
     }

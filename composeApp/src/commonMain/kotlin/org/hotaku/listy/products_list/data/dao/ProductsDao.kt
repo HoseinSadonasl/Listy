@@ -19,4 +19,7 @@ interface ProductsDao {
     @Query("SELECT * FROM products WHERE :categoryId IS NULL OR categoryId = :categoryId")
     fun getProducts(categoryId: Int?): Flow<List<ProductEntity>>
 
+    @Query("SELECT * FROM products WHERE id = :productId")
+    fun getProduct(productId: Int?): ProductEntity
+
 }

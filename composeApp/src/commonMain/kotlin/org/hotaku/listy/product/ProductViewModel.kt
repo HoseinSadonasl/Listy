@@ -3,6 +3,7 @@ package org.hotaku.listy.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -11,22 +12,28 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import org.hotaku.listy.category.domain.usecases.AddCategoryUseCase
 import org.hotaku.listy.category.domain.usecases.GetCategoriesUseCase
 import org.hotaku.listy.category.presentation.UiCategory
 import org.hotaku.listy.category.presentation.asCategory
 import org.hotaku.listy.category.presentation.asUiCategory
-import org.hotaku.listy.product.ProductScreenEvents.NavigateBack
+import org.hotaku.listy.product.ProductScreenEvents.*
 import org.hotaku.listy.product.ProductScreenIntents.*
 import org.hotaku.listy.products_list.domain.model.Product
-import org.hotaku.listy.products_list.domain.usecases.AddProductUseCase
+import org.hotaku.listy.products_list.domain.usecases.UpsertProductUseCase
 import org.hotaku.listy.products_list.domain.usecases.DeleteProductUseCase
+import org.hotaku.listy.products_list.domain.usecases.GetProductUseCase
+import org.hotaku.listy.products_list.presentation.UiProduct
 import org.hotaku.listy.products_list.presentation.asProduct
+import org.hotaku.listy.products_list.presentation.asUiProduct
+import kotlin.coroutines.cancellation.CancellationException
 
 class ProductViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getProductUseCase: GetProductUseCase,
     private val addCategoryUseCase: AddCategoryUseCase,
-    private val addProductUseCase: AddProductUseCase,
+    private val upsertProductUseCase: UpsertProductUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -57,6 +64,7 @@ class ProductViewModel(
             OnEditCategory -> editCategory()
             OnSaveCategory -> upsertCategory()
             is OnCategoryNameChange -> setCategoryName(query = intent.categoryName)
+            is OnProductDoneChanged -> {}
         }
     }
 
@@ -67,7 +75,19 @@ class ProductViewModel(
     }
 
     private fun getProductIfExist() {
-
+        val productId = savedStateHandle.toRoute<ProductScreenRoute>().productId
+        productId?.let {
+            _state.update { it.copy(isLoading = true) }
+            viewModelScope.launch {
+                val product = getProductUseCase(productId = it)
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        product = product.asUiProduct()
+                    )
+                }
+            }
+        }
     }
 
     private fun getCategories() {
@@ -82,13 +102,30 @@ class ProductViewModel(
         }
     }
 
+    private fun createNewProductIfNotExist() {
+        if (_state.value.product != null) return
+        val newProduct = UiProduct(
+            name = "",
+            description = "",
+            categoryId = 0,
+            dateCreated = Clock.System.now()
+        )
+        _state.update {
+            it.copy(
+                product = newProduct
+            )
+        }
+    }
+
     private fun saveProduct() {
         _state.value.product?.let { product ->
             upsertProduct(product = product.asProduct())
+            sendEvent(NavigateBack)
         }
     }
 
     private fun setProductDescription(description: String) {
+        createNewProductIfNotExist()
         _state.update {
             it.copy(
                 product = it.product?.copy(description = description)
@@ -97,6 +134,7 @@ class ProductViewModel(
     }
 
     private fun setProductName(name: String) {
+        createNewProductIfNotExist()
         _state.update {
             it.copy(
                 product = it.product?.copy(name = name)
@@ -104,24 +142,19 @@ class ProductViewModel(
         }
     }
 
-    private fun setProductEmoji(emoji: String) {
-        _state.update {
-            it.copy(
-                product = it.product?.copy(emoji = emoji)
-            )
-        }
-    }
-
     private fun setProductDone() {
         _state.value.product?.let { product ->
-            val doneProduct = product.asProduct().copy(done = true)
-            upsertProduct(product = doneProduct)
+            _state.update {
+                it.copy(
+                    product = product.copy(done = !product.done)
+                )
+            }
         }
     }
 
     private fun upsertProduct(product: Product) {
         viewModelScope.launch {
-            addProductUseCase(product = product)
+            upsertProductUseCase(product = product)
         }
     }
 

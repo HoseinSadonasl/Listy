@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import org.hotaku.listy.core.presentation.brightGreen
 
 @Composable
@@ -32,6 +33,6 @@ fun TextInput(
         colors = OutlinedTextFieldDefaults.colors().copy(
             focusedIndicatorColor = brightGreen
         ),
-        shape = RoundedCornerShape(percent = 16)
+        shape = RoundedCornerShape(16.dp)
     )
 }

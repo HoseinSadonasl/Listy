@@ -17,7 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.hotaku.listy.category.presentation.UiCategory
-import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_16dp
+import org.hotaku.listy.core.presentation.brightGreen
+import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_8dp
+import org.hotaku.listy.core.presentation.powder
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CategoryList(
@@ -30,14 +33,14 @@ fun CategoryList(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item { HorizontalSpacer_16dp() }
+        item { HorizontalSpacer_8dp() }
         items(
             count = categories.size,
-            key = { index -> categories[index] },
+            key = { index -> categories[index].id!! },
         ) { index ->
             CategoryItem(
                 category = categories[index],
-                isSelected = selectedCategory == index,
+                isSelected = selectedCategory == categories[index].id,
                 onClick = { onCategorySelected(index) }
             )
         }
@@ -54,11 +57,15 @@ fun CategoryList(
 private fun AddCategory(
     onClick: () -> Unit,
 ) {
+    val cardColors = CardDefaults.outlinedCardColors(
+        containerColor = powder,
+    )
     OutlinedCard(
         onClick = onClick,
+        colors = cardColors,
     ) {
         Box(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(12.dp),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -77,12 +84,12 @@ private fun CategoryItem(
 ) {
     val cardColors = CardDefaults.outlinedCardColors(
         containerColor = if (isSelected) {
-            MaterialTheme.colorScheme.primary
+            brightGreen
         } else {
-            CardDefaults.outlinedCardColors().containerColor
+            powder
         },
         contentColor = if (isSelected) {
-            MaterialTheme.colorScheme.primary
+            powder
         } else {
             CardDefaults.outlinedCardColors().contentColor
         }
@@ -95,9 +102,47 @@ private fun CategoryItem(
         Text(
             text = category.name,
             modifier = Modifier
-                .padding(16.dp),
+                .padding(12.dp),
             style = MaterialTheme.typography.bodyLarge
         )
     }
 }
 
+@Preview
+@Composable
+fun CategoryItemPreview() {
+    CategoryItem(
+        category = UiCategory(
+            id = 1,
+            name = "Category 1",
+        ),
+        isSelected = false,
+        onClick = {}
+    )
+}
+
+val categories = listOf(
+    UiCategory(
+        id = 1,
+        name = "Category 1",
+    ),
+    UiCategory(
+        id = 2,
+        name = "Category 2",
+    ),
+    UiCategory(
+        id = 3,
+        name = "Category 3",
+    ),
+)
+
+@Preview
+@Composable
+fun CategoryListPreview() {
+    CategoryList(
+        categories = categories,
+        selectedCategory = 2,
+        onCategorySelected = {},
+        onAddNewCategory = {}
+    )
+}

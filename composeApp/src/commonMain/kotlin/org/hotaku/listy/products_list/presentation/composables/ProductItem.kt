@@ -25,11 +25,6 @@ fun ProductItem(
                 text = product.description,
             )
         },
-        leadingContent =  {
-            Text(
-                text = product.emoji,
-            )
-        },
         trailingContent = product.done.takeIf { it == false }
             ?.let { { Checkbox(checked = it, onCheckedChange = { onDoneClick::invoke }) } },
     )

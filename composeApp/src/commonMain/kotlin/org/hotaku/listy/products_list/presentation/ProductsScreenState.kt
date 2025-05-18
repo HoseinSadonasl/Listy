@@ -2,7 +2,7 @@ package org.hotaku.listy.products_list.presentation
 
 import org.hotaku.listy.category.presentation.UiCategory
 
-data class ProductScreenState(
+data class ProductsScreenState(
     val isLoading: Boolean = true,
     val error: String? = null,
     val categories: List<UiCategory> = emptyList(),
