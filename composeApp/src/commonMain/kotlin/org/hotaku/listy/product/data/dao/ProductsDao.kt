@@ -20,6 +20,6 @@ interface ProductsDao {
     fun getProducts(categoryId: Int?): Flow<List<ProductEntity>>
 
     @Query("SELECT * FROM products WHERE id = :productId")
-    fun getProduct(productId: Int?): ProductEntity
+    suspend fun getProduct(productId: Int?): ProductEntity
 
 }
