@@ -10,6 +10,6 @@ data class ProductListScreenState(
     val products: List<UiProduct> = emptyList(),
     val categoryId: Int? = null,
     val product: UiProduct? = null,
-    val selectedTabIndex: Int = 0,
+    val selectedCategory: Int = 0,
     val isBottomSheetOpen: Boolean = false,
 )

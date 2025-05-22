@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.products_screen_title
-import org.hotaku.listy.core.presentation.brightGreen
+import org.hotaku.listy.core.presentation.primaryBlue
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -32,7 +32,7 @@ fun ProductListScreenScaffold(
                 title = stringResource(Res.string.products_screen_title),
             )
         },
-        containerColor = brightGreen,
+        containerColor = primaryBlue,
         floatingActionButton = { AddItemFab(onClick = onAddClick) },
         content = { paddingValues ->
             Column(
@@ -54,7 +54,7 @@ private fun AddItemFab(
 ) {
     FloatingActionButton(
         onClick = onClick,
-        containerColor = brightGreen,
+        containerColor = primaryBlue,
         content = {
             Icon(
                 imageVector = Icons.Default.Add,

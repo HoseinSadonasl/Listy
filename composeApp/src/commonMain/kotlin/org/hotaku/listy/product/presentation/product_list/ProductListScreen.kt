@@ -1,6 +1,7 @@
 package org.hotaku.listy.product.presentation.product_list
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -11,7 +12,7 @@ import listy.composeapp.generated.resources.load_data_error
 import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnDoneClick
 import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnNewProduct
 import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnProductItemClick
-import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnTabClick
+import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnCategoryClick
 import org.hotaku.listy.product.presentation.product_list.composables.ErrorState
 import org.hotaku.listy.product.presentation.product_list.composables.LoadingState
 import org.hotaku.listy.product.presentation.product_list.composables.ProductListScreenScaffold
@@ -65,8 +66,8 @@ fun ProductListScreenContent(
 
             ProductsCategoriesTabs(
                 tabs = state.categories,
-                selectedTabIndex = state.selectedTabIndex,
-                onTabClick = { onIntent(OnTabClick(tabIndex = it)) },
+                selectedTabIndex = state.selectedCategory,
+                onTabClick = { onIntent(OnCategoryClick(tabIndex = it)) },
                 onAddClick = { }
             )
             ProductsList(

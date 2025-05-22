@@ -19,28 +19,26 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App(
     navController: NavHostController = rememberNavController(),
 ) {
-    MaterialTheme {
-        NavHost(
-            navController = navController,
-            startDestination = ProductListScreenRoute
+    NavHost(
+        navController = navController,
+        startDestination = ProductListScreenRoute
+    ) {
+        composable<ProductListScreenRoute> {
+            ProductListScreen(
+                navigateToProductScreen = { id ->
+                    navController.navigate(ProductDetailScreenRoute(productId = id))
+                }
+            )
+        }
+        composable<ProductDetailScreenRoute>(
+            enterTransition = { slideInHorizontally() },
+            exitTransition = { slideOutHorizontally() }
         ) {
-            composable<ProductListScreenRoute> {
-                ProductListScreen(
-                    navigateToProductScreen = { id ->
-                        navController.navigate(ProductDetailScreenRoute(productId = id))
-                    }
-                )
-            }
-            composable<ProductDetailScreenRoute>(
-                enterTransition = { slideInHorizontally() },
-                exitTransition = { slideOutHorizontally() }
-            ) {
-                ProductDetailScreen(
-                    onBackClick = {
-                        navController.navigateUp()
-                    }
-                )
-            }
+            ProductDetailScreen(
+                onBackClick = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

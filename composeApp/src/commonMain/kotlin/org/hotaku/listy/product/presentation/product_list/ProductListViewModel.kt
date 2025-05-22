@@ -45,7 +45,7 @@ class ProductListViewModel(
     fun onIntent(intent: ProductListScreenIntent) {
         when (intent) {
             ProductListScreenIntent.OnNewProduct -> initNewProduct()
-            is ProductListScreenIntent.OnTabClick -> setSelectedTab(tabIndex = intent.tabIndex)
+            is ProductListScreenIntent.OnCategoryClick -> setSelectedTab(tabIndex = intent.tabIndex)
             is ProductListScreenIntent.OnDoneClick -> setProductDone(productId = intent.productId)
             is ProductListScreenIntent.OnProductItemClick -> onOpenProduct(productId = intent.productId)
         }
@@ -77,7 +77,7 @@ class ProductListViewModel(
     private fun setSelectedTab(tabIndex: Int) {
         _state.update {
             it.copy(
-                selectedTabIndex = tabIndex
+                selectedCategory = tabIndex
             )
         }
     }
@@ -92,7 +92,7 @@ class ProductListViewModel(
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             getCategoriesUseCase()
-                .combine(getProductsUseCase(categoryId = 0)) { categories, products ->
+                .combine(getProductsUseCase(categoryId = null)) { categories, products ->
                     categories.map { it.asUiCategory() } to products.map { it.asUiProduct() }
                 }
                 .catch { throwable ->

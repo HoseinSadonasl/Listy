@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.hotaku.listy.category.presentation.UiCategory
-import org.hotaku.listy.core.presentation.brightGreen
+import org.hotaku.listy.core.presentation.primaryBlue
 
 @Composable
 fun ProductsCategoriesTabs(
@@ -46,7 +46,7 @@ private fun CategoryTab(
     Tab(
         text = { Text(text = title) },
         selected = selected,
-        selectedContentColor = brightGreen,
+        selectedContentColor = primaryBlue,
         onClick = onTabClick
     )
 }

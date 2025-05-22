@@ -3,10 +3,9 @@ package org.hotaku.listy.product.presentation.product_detail.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,11 +17,10 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock.System
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.add_product_description_placeholder
-import listy.composeapp.generated.resources.all_button_delete
 import listy.composeapp.generated.resources.all_button_save
 import listy.composeapp.generated.resources.product_screen_complete
 import listy.composeapp.generated.resources.products_screen_title
-import org.hotaku.listy.core.presentation.brightPink
+import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.SolidButton
 import org.hotaku.listy.core.presentation.composables.TextInput
 import org.hotaku.listy.product.presentation.UiProduct
@@ -37,11 +35,10 @@ fun EditProduct(
     onDescriptionChange: (String) -> Unit,
     onSaveProduct: () -> Unit,
     onDoneChange: () -> Unit,
-    onDelete: () -> Unit,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         TextInput(
             value = product?.name.orEmpty(),
@@ -59,7 +56,7 @@ fun EditProduct(
             onValueChange = onDescriptionChange,
             placeholder = stringResource(Res.string.add_product_description_placeholder),
             maxLines = 3,
-            modifier = Modifier.fillMaxWidth().heightIn(min = 120.dp),
+            modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 112.dp),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 textDecoration = if (product?.done == true) {
                     TextDecoration.LineThrough
@@ -72,31 +69,19 @@ fun EditProduct(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = stringResource(Res.string.product_screen_complete)
+                text = stringResource(Res.string.product_screen_complete),
+                style = MaterialTheme.typography.bodyLarge,
             )
-            Checkbox(
-                checked = product?.done == true,
+            CheckBox(
+                isChecked = product?.done == true,
                 onCheckedChange = { onDoneChange() }
             )
         }
-        Row(
+        SolidButton(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            product?.let {
-                SolidButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(Res.string.all_button_delete),
-                    color = brightPink,
-                    onClick = onDelete,
-                )
-            }
-            SolidButton(
-                modifier = Modifier.weight(1f),
-                text = stringResource(Res.string.all_button_save),
-                onClick = onSaveProduct,
-            )
-        }
+            text = stringResource(Res.string.all_button_save),
+            onClick = onSaveProduct,
+        )
     }
 }
 
@@ -108,7 +93,7 @@ fun EditProductPreview() {
             product = UiProduct(
                 id = 1,
                 name = "Item name",
-                description = "Item description",
+                description = "Item description \nItem description \nItem description",
                 categoryId = 1,
                 done = true,
                 dateCreated = System.now(),
@@ -117,7 +102,6 @@ fun EditProductPreview() {
             onDescriptionChange = {},
             onSaveProduct = {},
             onDoneChange = {},
-            onDelete = {}
         )
     }
 }

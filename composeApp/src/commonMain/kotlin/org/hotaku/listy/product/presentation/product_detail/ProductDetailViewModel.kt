@@ -55,13 +55,16 @@ class ProductDetailViewModel(
         when (intent) {
             OnSaveClick -> saveProduct()
             OnBackClick -> sendEvent(event = NavigateBack)
-            OnDeleteClick -> deleteProduct()
+            OnDeleteClick -> showDeleteProductDialog()
+            OnDeleteProduct -> deleteProduct()
+            OnHideDeleteDialog -> showDeleteProductDialog(show = false)
             OnDoneClick -> setProductDone()
             is OnProductDetailDescriptionChanged -> setProductDescription(description = intent.description)
             is OnProductDetailNameChanged -> setProductName(name = intent.name)
             OnNewCategory -> createNewCategory()
-            OnEditCategory -> editCategory()
             OnSaveCategory -> upsertCategory()
+            is OnEditCategory -> editCategory(intent.id)
+            is OnSetProductCategory -> setCategory(intent.id)
             is OnCategoryNameChange -> setCategoryName(query = intent.categoryName)
             is OnProductDetailDoneChanged -> {}
         }
@@ -157,10 +160,20 @@ class ProductDetailViewModel(
         }
     }
 
+    private fun showDeleteProductDialog(show: Boolean = true) {
+        _state.update { 
+            it.copy(
+                showDeleteDialog = show
+            )
+        }
+    }
+    
     private fun deleteProduct() {
         _state.value.product?.let { product ->
             viewModelScope.launch {
                 deleteProductUseCase(product = product.asProduct())
+                showDeleteProductDialog(show = false)
+                sendEvent(NavigateBack)
             }
         }
     }
@@ -175,25 +188,33 @@ class ProductDetailViewModel(
         }
     }
 
-    private fun editCategory() {
+    private fun setCategory(id: Int) {
+        _state.value.product?.let {  product ->
+            _state.update {
+                it.copy(
+                    product = product.copy(categoryId = id)
+                )
+            }
+        }
+    }
+
+    private fun editCategory(id: Int) {
         _state.update {
             it.copy(
                 category = it.categories.find { category ->
-                    category.id == it.product?.categoryId
+                    category.id == id
                 }
             )
         }
     }
 
     private fun setCategoryName(query: String) {
-        _state.value.category?.let { category ->
-            _state.update {
-                it.copy(
-                    category = category.copy(
-                        name = query
-                    )
+        _state.update {
+            it.copy(
+                category = it.category!!.copy(
+                    name = query
                 )
-            }
+            )
         }
     }
 

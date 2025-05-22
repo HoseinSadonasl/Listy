@@ -9,6 +9,7 @@ fun main() {
     application {
         Window(
             onCloseRequest = ::exitApplication,
+            alwaysOnTop = true,
             title = "Listy",
         ) {
             App()
