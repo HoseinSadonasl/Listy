@@ -56,7 +56,6 @@ fun ProductDetailScreenScaffold(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-//                    .safeDrawingPadding()
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
