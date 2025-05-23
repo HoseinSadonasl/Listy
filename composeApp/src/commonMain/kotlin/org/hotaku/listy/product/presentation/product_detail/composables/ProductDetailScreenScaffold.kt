@@ -3,8 +3,15 @@ package org.hotaku.listy.product.presentation.product_detail.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Scaffold
@@ -48,12 +55,14 @@ fun ProductDetailScreenScaffold(
         content = { paddingValues ->
             Column(
                 modifier = Modifier
-                    .safeContentPadding()
-                    .fillMaxSize(),
+                    .fillMaxSize()
+//                    .safeDrawingPadding()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 content()
+                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.ime))
             }
         },
     )
