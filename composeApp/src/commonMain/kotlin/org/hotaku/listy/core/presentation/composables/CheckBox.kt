@@ -30,7 +30,7 @@ fun CheckBox(
 
 @Preview
 @Composable
-fun CheckBoxPreview() {
+private fun CheckBoxPreview() {
     Surface(
         modifier = Modifier.padding(24.dp),
         color = powder,

@@ -8,6 +8,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.hotaku.listy.core.presentation.powder
@@ -51,12 +52,13 @@ fun TopRoundedCardPreview() {
 @Composable
 fun DefaultCard(
     modifier: Modifier = Modifier,
+    cardColor: Color = powder,
     content: @Composable () -> Unit
 ) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors().copy(
-            containerColor = powder,
+            containerColor = cardColor,
         ),
         shape = RoundedCornerShape(24.dp)
     ) {
