@@ -1,11 +1,16 @@
 package org.hotaku.listy.product.presentation.product_detail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -14,10 +19,13 @@ import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.product_screen_delete_dialog_confirm_delete
 import listy.composeapp.generated.resources.product_screen_delete_dialog_message
 import listy.composeapp.generated.resources.product_screen_delete_dialog_title
+import listy.composeapp.generated.resources.product_screen_the_item_is_sold
 import org.hotaku.listy.core.presentation.composables.AlertDialog
 import org.hotaku.listy.core.presentation.composables.TopRoundedCard
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_24dp
+import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.NavigateBack
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnCategoryNameChange
@@ -86,6 +94,17 @@ fun ProductDetailScreenContent(
         onNavigateBack = onBackClick,
         onDeleteClick = { onIntent(OnDeleteClick) }.takeIf { state.product != null },
         content = {
+
+            if (state.product?.done == true) {
+                Text(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    text = stringResource(Res.string.product_screen_the_item_is_sold),
+                    color = powder,
+                    textAlign = TextAlign.Center,
+                    fontSize = TextUnit(20f, TextUnitType.Sp),
+                )
+            }
+
             TopRoundedCard {
                 VerticalSpacer_24dp()
 
@@ -153,7 +172,7 @@ fun ProductScreenPreview() {
                 id = 1,
                 name = "Product 1",
                 description = "Description 1",
-                done = false,
+                done = true,
                 categoryId = 2,
                 dateCreated = Clock.System.now(),
             ),

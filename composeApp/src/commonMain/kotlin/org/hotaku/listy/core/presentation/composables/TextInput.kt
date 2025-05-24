@@ -18,6 +18,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import org.hotaku.listy.core.presentation.brightBackgroundGray
+import org.hotaku.listy.core.presentation.brightGray
+import org.hotaku.listy.core.presentation.gray
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.core.presentation.powder
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -39,6 +42,7 @@ fun TextInput(
         maxLines = maxLines,
         modifier = modifier,
         textStyle = textStyle.copy(
+            fontSize = TextUnit(14f, TextUnitType.Sp),
             lineHeight = TextUnit(
                 30f,
                 TextUnitType.Sp
@@ -46,12 +50,16 @@ fun TextInput(
         ),
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.colors().copy(
+            focusedTextColor = gray,
+            unfocusedTextColor = gray,
+            disabledTextColor = brightGray,
+            focusedPlaceholderColor = gray,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            focusedContainerColor = primaryBlue.copy(alpha = .1f),
-            unfocusedContainerColor = primaryBlue.copy(alpha = .1f),
+            focusedContainerColor = brightBackgroundGray,
+            unfocusedContainerColor = brightBackgroundGray,
             disabledIndicatorColor = primaryBlue,
-            disabledContainerColor = primaryBlue.copy(alpha = .1f),
+            disabledContainerColor = brightBackgroundGray,
         ),
         shape = RoundedCornerShape(16.dp)
     )

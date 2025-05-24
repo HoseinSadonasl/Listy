@@ -4,7 +4,7 @@
     <string name="all_button_save">Save</string>
     <string name="all_button_cancel">Cancel</string>
     <string name="all_button_delete">Delete</string>
-    <string name="product_screen_complete">Complete</string>
+    <string name="product_screen_complete">Sold</string>
     <string name="add_category_chip_label">Add</string>
     <string name="add_product_title_placeholder">Title</string>
     <string name="add_product_description_placeholder">Description</string>
@@ -16,4 +16,5 @@
     <string name="product_screen_delete_dialog_message">Are you sure you want to delete this product?</string>
     <string name="product_screen_delete_dialog_confirm_delete">Delete</string>
     <string name="product_screen_delete_dialog_Cancel">Cancel</string>
+    <string name="product_screen_the_item_is_sold">Yay! 🎊 It’s yours now!\nHope it brings you tons of joy. </string>
 </resources>

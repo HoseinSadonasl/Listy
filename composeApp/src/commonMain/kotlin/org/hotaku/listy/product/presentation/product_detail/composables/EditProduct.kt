@@ -23,6 +23,7 @@ import listy.composeapp.generated.resources.products_screen_title
 import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.SolidButton
 import org.hotaku.listy.core.presentation.composables.TextInput
+import org.hotaku.listy.core.presentation.gray
 import org.hotaku.listy.product.presentation.UiProduct
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -71,6 +72,7 @@ fun EditProduct(
             Text(
                 text = stringResource(Res.string.product_screen_complete),
                 style = MaterialTheme.typography.bodyLarge,
+                color = gray
             )
             CheckBox(
                 isChecked = product?.done == true,

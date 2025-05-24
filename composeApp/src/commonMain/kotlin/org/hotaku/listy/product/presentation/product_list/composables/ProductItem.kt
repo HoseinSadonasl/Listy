@@ -23,6 +23,7 @@ import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.DefaultCard
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_8dp
+import org.hotaku.listy.core.presentation.disableGray
 import org.hotaku.listy.core.presentation.gray
 import org.hotaku.listy.core.presentation.powder
 import org.hotaku.listy.core.presentation.primaryBlue
@@ -51,7 +52,7 @@ fun ProductItem(
                     Text(
                         text = product.name,
                         fontSize = TextUnit(20f, TextUnitType.Sp),
-                        color = if (product.done) gray else primaryBlue,
+                        color = if (product.done) disableGray else primaryBlue,
                         textDecoration = TextDecoration.LineThrough.takeIf { product.done }
                     )
 
@@ -63,7 +64,7 @@ fun ProductItem(
 
                 Text(
                     text = product.description,
-                    color = gray,
+                    color = disableGray,
                     textDecoration = TextDecoration.LineThrough.takeIf { product.done }
                 )
             }

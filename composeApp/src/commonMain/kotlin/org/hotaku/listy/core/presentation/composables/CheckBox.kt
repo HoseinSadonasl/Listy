@@ -24,6 +24,7 @@ fun CheckBox(
         colors = CheckboxDefaults.colors(
             checkedColor = primaryBlue,
             uncheckedColor = primaryBlue.copy(alpha = .5f),
+            checkmarkColor =powder
         ),
     )
 }

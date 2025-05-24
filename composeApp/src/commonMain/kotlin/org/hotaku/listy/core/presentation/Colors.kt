@@ -2,9 +2,10 @@ package org.hotaku.listy.core.presentation
 
 import androidx.compose.ui.graphics.Color
 
-val gray = Color(0xFFadb5bd)
+val gray = Color(0xFF5c5c5c)
 val brightGray = Color(0xFFe9ecef)
-    val brightBackgroundGray = Color(0xFFebedf0)
+val disableGray = Color(0xFF9c9c9c)
+val brightBackgroundGray = Color(0xFFebedf0)
 val brightPurple = Color(0xFFA182E8)
 val primaryBlue = Color(0xFF2176ff)
 val brightBlue = Color(0xFF85b3ff)

@@ -22,6 +22,7 @@ import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.danger
 import listy.composeapp.generated.resources.empty
 import listy.composeapp.generated.resources.empty_state_error_message
+import org.hotaku.listy.core.presentation.gray
 import org.hotaku.listy.core.presentation.powder
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -50,7 +51,8 @@ fun Message(
                 .padding(horizontal = 32.dp),
             text = message ?: stringResource(Res.string.empty_state_error_message),
             fontSize = TextUnit(20f, TextUnitType.Sp),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = gray
         )
     }
 }

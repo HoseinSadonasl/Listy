@@ -23,9 +23,12 @@ import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.add_category_chip_label
 import org.hotaku.listy.category.presentation.UiCategory
+import org.hotaku.listy.core.presentation.brightBackgroundBlue
+import org.hotaku.listy.core.presentation.brightBackgroundGray
 import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_16dp
+import org.hotaku.listy.core.presentation.disableGray
 import org.hotaku.listy.core.presentation.gray
 import org.hotaku.listy.core.presentation.powder
 import org.jetbrains.compose.resources.stringResource
@@ -112,8 +115,9 @@ private fun CategoryItem(
     onEditClick: () -> Unit,
 ) {
         val colors = FilterChipDefaults.filterChipColors(
-            containerColor = brightGray,
+            containerColor = brightBackgroundGray,
             selectedContainerColor = primaryBlue.copy(alpha = .1f),
+            labelColor = gray,
             selectedLabelColor = primaryBlue,
             selectedTrailingIconColor = primaryBlue,
         )

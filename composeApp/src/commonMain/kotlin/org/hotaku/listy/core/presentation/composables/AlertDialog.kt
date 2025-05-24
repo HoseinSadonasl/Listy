@@ -9,13 +9,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.alert_dialog_confirm
 import listy.composeapp.generated.resources.alert_dialog_dismiss
+import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.brightPink
+import org.hotaku.listy.core.presentation.gray
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -35,8 +40,10 @@ fun AlertDialog(
             Text(
                 text = title,
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
+                fontSize = TextUnit(20f, TextUnitType.Sp),
+                fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
+                color = gray
             )
             message?.let {
                 Text(
@@ -44,7 +51,9 @@ fun AlertDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = TextUnit(14f, TextUnitType.Sp),
+                    textAlign = TextAlign.Center,
+                    color = gray
                 )
             }
             Row(
