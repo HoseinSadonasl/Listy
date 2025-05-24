@@ -1,14 +1,23 @@
 package org.hotaku.listy.product.presentation.product_detail.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,12 +28,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import listy.composeapp.generated.resources.Res
+import listy.composeapp.generated.resources.add_product
 import listy.composeapp.generated.resources.product_screen_title
 import org.hotaku.listy.core.presentation.composables.TopBarIconButton
+import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
 import org.hotaku.listy.core.presentation.powder
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.product_list.composables.TopBar
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 fun ProductDetailScreenScaffold(
@@ -55,11 +67,26 @@ fun ProductDetailScreenScaffold(
         content = { paddingValues ->
             Column(
                 modifier = Modifier
+                    .padding(paddingValues)
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
             ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxWidth(.7f)
+                            .aspectRatio(1f),
+                        imageVector = vectorResource(Res.drawable.add_product),
+                        contentDescription = null,
+                    )
+                }
+                VerticalSpacer_16dp()
                 content()
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.ime))
             }
