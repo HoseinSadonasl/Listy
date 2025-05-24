@@ -3,6 +3,8 @@ package org.hotaku.listy.product.presentation.product_list
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -14,22 +16,25 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import listy.composeapp.generated.resources.Res
+import listy.composeapp.generated.resources.empty
+import listy.composeapp.generated.resources.empty_state_error_message
 import listy.composeapp.generated.resources.load_data_error
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.product_detail.composables.categories
-import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnCategoryClick
 import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnDoneClick
 import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnNewProduct
 import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnProductItemClick
-import org.hotaku.listy.product.presentation.product_list.composables.ErrorState
+import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnTabChange
+import org.hotaku.listy.product.presentation.product_list.ProductListScreenIntent.OnUpdateList
+import org.hotaku.listy.product.presentation.product_list.composables.Message
 import org.hotaku.listy.product.presentation.product_list.composables.ProductListScreenScaffold
 import org.hotaku.listy.product.presentation.product_list.composables.ProductsCategoriesTabs
 import org.hotaku.listy.product.presentation.product_list.composables.ProductsList
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-
 
 @Composable
 fun ProductListScreen(
@@ -61,63 +66,101 @@ fun ProductListScreenContent(
     state: ProductListScreenState,
     onIntent: (ProductListScreenIntent) -> Unit
 ) {
+
+    val pagerState = rememberPagerState(pageCount = {
+        state.categories.size
+    })
+
+    LaunchedEffect(pagerState.currentPage) {
+        onIntent(OnTabChange(tabIndex = pagerState.currentPage))
+    }
+
+    LaunchedEffect(state.selectedCategory) {
+        onIntent(OnUpdateList)
+    }
+
     ProductListScreenScaffold(
         modifier = modifier,
         onAddClick = { onIntent(OnNewProduct) },
         content = {
-            if (state.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        color = primaryBlue,
-                        strokeWidth = 2.dp,
-                        strokeCap = StrokeCap.Round
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                if (state.error != null) {
+                    Message(
+                        message = stringResource(Res.string.load_data_error, state.error)
                     )
-                }
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    state.error?.let { errorMessage ->
-                        ErrorState(
-                            message = stringResource(Res.string.load_data_error, errorMessage)
-                        )
-                    }
-
+                } else {
                     ProductsCategoriesTabs(
                         tabs = state.categories,
                         selectedTabIndex = state.selectedCategory,
-                        onTabClick = { onIntent(OnCategoryClick(tabIndex = it)) },
-                        onAddClick = { }
+                        onTabClick = { onIntent(OnTabChange(tabIndex = it)) },
                     )
 
-                    ProductsList(
-                        products = state.products,
-                        onProductItemClick = { productId ->
-                            onIntent(
-                                OnProductItemClick(
-                                    productId = productId
-                                )
-                            )
-                        },
-                        onDoneClick = { productId ->
-                            onIntent(
-                                OnDoneClick(
-                                    productId = productId
-                                )
-                            )
+                    HorizontalPager(
+                        state = pagerState
+                    ) { index ->
+                        if (state.isLoading) {
+                            LoadingState()
+                        } else {
+                            SucessState(products = state.products, onIntent = onIntent)
                         }
-                    )
+                    }
                 }
-
             }
-
-
         }
     )
+}
+
+@Composable
+private fun SucessState(
+    products: List<UiProduct>,
+    onIntent: (ProductListScreenIntent) -> Unit
+) {
+    if (products.isNotEmpty()) {
+        ProductsList(
+            products = products,
+            onProductItemClick = { productId ->
+                onIntent(
+                    OnProductItemClick(
+                        productId = productId
+                    )
+                )
+            },
+            onDoneClick = { product ->
+                onIntent(
+                    OnDoneClick(
+                        product = product
+                    )
+                )
+            }
+        )
+    } else {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Message(
+                vectorRes = vectorResource(Res.drawable.empty),
+                message = stringResource(Res.string.empty_state_error_message)
+            )
+        }
+    }
+}
+
+@Composable
+private fun LoadingState() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            color = primaryBlue,
+            strokeWidth = 2.dp,
+            strokeCap = StrokeCap.Round
+        )
+    }
 }
 
 val products = listOf<UiProduct>(

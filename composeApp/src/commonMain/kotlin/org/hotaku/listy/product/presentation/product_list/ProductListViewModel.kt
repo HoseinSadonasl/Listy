@@ -18,6 +18,7 @@ import org.hotaku.listy.category.presentation.asUiCategory
 import org.hotaku.listy.product.domain.model.Product
 import org.hotaku.listy.product.domain.usecases.GetProductsUseCase
 import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
+import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.asProduct
 import org.hotaku.listy.product.presentation.asUiProduct
 
@@ -31,6 +32,7 @@ class ProductListViewModel(
     private var _state = MutableStateFlow<ProductListScreenState>(ProductListScreenState())
     val state = _state
         .onStart {
+            _state.update { it.copy(isLoading = true) }
             updateList()
         }
         .stateIn(
@@ -44,9 +46,10 @@ class ProductListViewModel(
 
     fun onIntent(intent: ProductListScreenIntent) {
         when (intent) {
+            is ProductListScreenIntent.OnUpdateList -> updateList()
             ProductListScreenIntent.OnNewProduct -> initNewProduct()
-            is ProductListScreenIntent.OnCategoryClick -> setSelectedTab(tabIndex = intent.tabIndex)
-            is ProductListScreenIntent.OnDoneClick -> setProductDone(productId = intent.productId)
+            is ProductListScreenIntent.OnTabChange -> setSelectedTab(tabIndex = intent.tabIndex)
+            is ProductListScreenIntent.OnDoneClick -> setProductDone(product = intent.product)
             is ProductListScreenIntent.OnProductItemClick -> onOpenProduct(productId = intent.productId)
         }
     }
@@ -57,16 +60,10 @@ class ProductListViewModel(
         }
     }
 
-    private fun setProductDone(productId: Int) {
-        val product = findProductById(id = productId)
-        product?.let {
-            upsertProduct(product = it.copy(done = true))
-        }
+    private fun setProductDone(product: UiProduct) {
+        if(product.done) return
+        upsertProduct(product = product.asProduct().copy(done = true))
     }
-
-    private fun findProductById(id: Int): Product? = _state.value.products.find {
-        id == it.categoryId
-    }?.asProduct()
 
     private fun upsertProduct(product: Product) {
         viewModelScope.launch {
@@ -89,10 +86,11 @@ class ProductListViewModel(
     }
 
     fun updateList() {
-        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             getCategoriesUseCase()
-                .combine(getProductsUseCase(categoryId = null)) { categories, products ->
+                .combine(getProductsUseCase(
+                    categoryId = _state.value.selectedCategory.takeIf { it > 0  })
+                ) { categories, products ->
                     categories.map { it.asUiCategory() } to products.map { it.asUiProduct() }
                 }
                 .catch { throwable ->

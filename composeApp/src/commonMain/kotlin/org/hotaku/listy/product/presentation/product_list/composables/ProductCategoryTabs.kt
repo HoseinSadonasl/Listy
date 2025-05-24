@@ -19,7 +19,6 @@ fun ProductsCategoriesTabs(
     tabs: List<UiCategory>,
     selectedTabIndex: Int,
     onTabClick: (Int) -> Unit,
-    onAddClick: () -> Unit
 ) {
     ScrollableTabRow(
         modifier = modifier.fillMaxWidth(),
@@ -34,18 +33,18 @@ fun ProductsCategoriesTabs(
             )
         },
         tabs = {
+            CategoryTab(
+                title = "All",
+                selected = selectedTabIndex == tabs.size,
+                onTabClick = { onTabClick(0) }
+            )
             tabs.forEachIndexed { index, category ->
                 CategoryTab(
                     title = category.name,
                     selected = selectedTabIndex == index,
-                    onTabClick = { onTabClick(index) }
+                    onTabClick = { onTabClick(category.id!!) }
                 )
             }
-            CategoryTab(
-                title = "All",
-                selected = selectedTabIndex == tabs.size,
-                onTabClick = onAddClick
-            )
         },
     )
 }
