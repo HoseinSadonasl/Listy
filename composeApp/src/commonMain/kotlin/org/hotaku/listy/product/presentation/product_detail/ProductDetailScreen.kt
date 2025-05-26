@@ -24,8 +24,7 @@ import org.hotaku.listy.core.presentation.composables.AlertDialog
 import org.hotaku.listy.core.presentation.composables.TopRoundedCard
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_24dp
-import org.hotaku.listy.core.presentation.powder
-import org.hotaku.listy.core.presentation.primaryBlue
+import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.NavigateBack
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnCategoryNameChange
@@ -99,7 +98,7 @@ fun ProductDetailScreenContent(
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     text = stringResource(Res.string.product_screen_the_item_is_sold),
-                    color = powder,
+                    color = background,
                     textAlign = TextAlign.Center,
                     fontSize = TextUnit(20f, TextUnitType.Sp),
                 )

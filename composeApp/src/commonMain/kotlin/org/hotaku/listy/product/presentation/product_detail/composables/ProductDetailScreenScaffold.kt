@@ -22,11 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import listy.composeapp.generated.resources.Res
-import listy.composeapp.generated.resources.add_product
+import listy.composeapp.generated.resources.add_listy
 import listy.composeapp.generated.resources.product_screen_title
+import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.composables.TopBarIconButton
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
-import org.hotaku.listy.core.presentation.powder
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.product_list.composables.TopBar
 import org.jetbrains.compose.resources.stringResource
@@ -57,7 +57,7 @@ fun ProductDetailScreenScaffold(
             )
         },
         containerColor = primaryBlue,
-        contentColor = powder,
+        contentColor = background,
         content = { paddingValues ->
             Column(
                 modifier = Modifier
@@ -69,20 +69,20 @@ fun ProductDetailScreenScaffold(
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .weight(1f),
                     contentAlignment = Alignment.Center,
                 ) {
                     Image(
                         modifier = Modifier
-                            .fillMaxWidth(.7f)
+                            .fillMaxWidth(.5f)
                             .aspectRatio(1f),
-                        imageVector = vectorResource(Res.drawable.add_product),
+                        imageVector = vectorResource(Res.drawable.add_listy),
                         contentDescription = null,
                     )
                 }
                 VerticalSpacer_16dp()
                 content()
-                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.ime))
             }
         },
     )

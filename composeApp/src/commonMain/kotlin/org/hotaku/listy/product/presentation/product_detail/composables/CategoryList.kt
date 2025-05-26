@@ -23,14 +23,14 @@ import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.add_category_chip_label
 import org.hotaku.listy.category.presentation.UiCategory
-import org.hotaku.listy.core.presentation.brightBackgroundBlue
+import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.brightBackgroundGray
+import org.hotaku.listy.core.presentation.brightBlue
 import org.hotaku.listy.core.presentation.brightGray
-import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_16dp
-import org.hotaku.listy.core.presentation.disableGray
 import org.hotaku.listy.core.presentation.gray
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.grayText
+import org.hotaku.listy.core.presentation.primaryBlue
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -75,8 +75,8 @@ private fun AddCategory(
 ) {
     val colors = AssistChipDefaults.assistChipColors(
         containerColor = brightGray,
-        labelColor = gray,
-        leadingIconContentColor = gray
+        labelColor = grayText,
+        leadingIconContentColor = grayText
     )
 
     AssistChip(
@@ -116,8 +116,8 @@ private fun CategoryItem(
 ) {
         val colors = FilterChipDefaults.filterChipColors(
             containerColor = brightBackgroundGray,
-            selectedContainerColor = primaryBlue.copy(alpha = .1f),
-            labelColor = gray,
+            selectedContainerColor = brightBlue,
+            labelColor = grayText,
             selectedLabelColor = primaryBlue,
             selectedTrailingIconColor = primaryBlue,
         )
@@ -180,7 +180,7 @@ val categories = listOf(
 @Composable
 fun CategoryListPreview() {
     Surface(
-        color = powder,
+        color = background,
     ) {
         CategoryList(
             categories = categories,

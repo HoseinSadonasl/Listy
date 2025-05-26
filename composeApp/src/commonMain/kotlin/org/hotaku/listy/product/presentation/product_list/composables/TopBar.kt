@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import org.hotaku.listy.core.presentation.composables.TopBarIconButton
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.primaryBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,9 +34,9 @@ fun TopBar(
         },
         colors = TopAppBarDefaults.topAppBarColors().copy(
             containerColor = primaryBlue,
-            navigationIconContentColor = powder,
-            actionIconContentColor = powder,
-            titleContentColor = powder
+            navigationIconContentColor = background,
+            actionIconContentColor = background,
+            titleContentColor = background
         ),
         actions = actions
     )

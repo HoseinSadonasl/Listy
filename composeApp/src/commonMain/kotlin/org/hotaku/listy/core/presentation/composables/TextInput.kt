@@ -19,10 +19,12 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import org.hotaku.listy.core.presentation.brightBackgroundGray
+import org.hotaku.listy.core.presentation.brightBackgroundGrayUnFocused
 import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.gray
-import org.hotaku.listy.core.presentation.primaryBlue
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.grayText
+import org.hotaku.listy.core.presentation.grayTextUnFocused
+import org.hotaku.listy.core.presentation.background
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -50,15 +52,14 @@ fun TextInput(
         ),
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.colors().copy(
-            focusedTextColor = gray,
-            unfocusedTextColor = gray,
+            focusedTextColor = grayText,
+            unfocusedTextColor = grayTextUnFocused,
             disabledTextColor = brightGray,
             focusedPlaceholderColor = gray,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             focusedContainerColor = brightBackgroundGray,
-            unfocusedContainerColor = brightBackgroundGray,
-            disabledIndicatorColor = primaryBlue,
+            unfocusedContainerColor = brightBackgroundGrayUnFocused,
             disabledContainerColor = brightBackgroundGray,
         ),
         shape = RoundedCornerShape(16.dp)
@@ -70,12 +71,12 @@ fun TextInput(
 fun TextInputPreview() {
     Column (
         modifier = Modifier
-            .background(powder)
+            .background(background)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         TextInput(
-            value = "Test",
+            value = "",
             onValueChange = {},
             placeholder = "Placeholder",
             modifier = Modifier,

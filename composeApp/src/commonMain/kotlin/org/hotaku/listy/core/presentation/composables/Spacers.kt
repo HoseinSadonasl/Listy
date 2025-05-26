@@ -29,6 +29,13 @@ fun VerticalSpacer_16dp() {
 }
 
 @Composable
+fun VerticalSpacer_20dp() {
+    Spacer(
+        modifier = Modifier.height(20.dp)
+    )
+}
+
+@Composable
 fun VerticalSpacer_24dp() {
     Spacer(
         modifier = Modifier.height(24.dp)
@@ -52,6 +59,13 @@ fun HorizontalSpacer_12dp() {
 fun HorizontalSpacer_16dp() {
     Spacer(
         modifier = Modifier.width(16.dp)
+    )
+}
+
+@Composable
+fun HorizontalSpacer_20dp() {
+    Spacer(
+        modifier = Modifier.width(20.dp)
     )
 }
 

@@ -19,11 +19,13 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
-import listy.composeapp.generated.resources.danger
-import listy.composeapp.generated.resources.empty
+import listy.composeapp.generated.resources.empty_listy
 import listy.composeapp.generated.resources.empty_state_error_message
+import listy.composeapp.generated.resources.warning_listy
+import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.gray
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.grayText
+import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -31,7 +33,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun Message(
     modifier: Modifier = Modifier,
-    vectorRes: ImageVector = vectorResource(Res.drawable.danger),
+    vectorRes: ImageVector = vectorResource(Res.drawable.warning_listy),
     message: String? = null,
 ) {
     Column(
@@ -41,7 +43,7 @@ fun Message(
     ) {
         Image(
             modifier = Modifier
-                .fillMaxWidth(.7f)
+                .fillMaxWidth(.5f)
                 .aspectRatio(1f),
             imageVector = vectorRes,
             contentDescription = null,
@@ -50,9 +52,9 @@ fun Message(
             modifier = Modifier
                 .padding(horizontal = 32.dp),
             text = message ?: stringResource(Res.string.empty_state_error_message),
-            fontSize = TextUnit(20f, TextUnitType.Sp),
+            fontSize = TextUnit(16f, TextUnitType.Sp),
             textAlign = TextAlign.Center,
-            color = gray
+            color = grayTextUnFocused
         )
     }
 }
@@ -61,12 +63,12 @@ fun Message(
 @Composable
 fun ErrorStatePreview() {
     Box(
-        modifier = Modifier.background(powder).fillMaxSize().padding(16.dp),
+        modifier = Modifier.background(background).fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         Message(
             modifier = Modifier.fillMaxWidth(),
-            vectorRes = vectorResource(Res.drawable.empty),
+            vectorRes = vectorResource(Res.drawable.empty_listy),
             message = "Error Text"
         )
     }

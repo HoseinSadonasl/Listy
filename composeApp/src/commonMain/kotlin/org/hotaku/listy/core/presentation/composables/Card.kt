@@ -1,6 +1,7 @@
 package org.hotaku.listy.core.presentation.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -11,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.background
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -22,7 +23,7 @@ fun TopRoundedCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors().copy(
-            containerColor = powder,
+            containerColor = background,
         ),
         shape = RoundedCornerShape(
             topStart = 24.dp,
@@ -52,7 +53,7 @@ fun TopRoundedCardPreview() {
 @Composable
 fun DefaultCard(
     modifier: Modifier = Modifier,
-    cardColor: Color = powder,
+    cardColor: Color = background,
     content: @Composable () -> Unit
 ) {
     Card(
@@ -70,7 +71,7 @@ fun DefaultCard(
 @Composable
 fun DefaultCardPreview() {
     DefaultCard(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().height(120.dp),
     ) {
         Text(
             modifier = Modifier.fillMaxWidth().padding(16.dp),

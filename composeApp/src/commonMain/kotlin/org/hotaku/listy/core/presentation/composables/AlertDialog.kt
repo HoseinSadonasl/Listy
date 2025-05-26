@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,16 +17,15 @@ import androidx.compose.ui.window.Dialog
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.alert_dialog_confirm
 import listy.composeapp.generated.resources.alert_dialog_dismiss
-import org.hotaku.listy.core.presentation.brightGray
-import org.hotaku.listy.core.presentation.brightPink
-import org.hotaku.listy.core.presentation.gray
+import org.hotaku.listy.core.presentation.brightRed
+import org.hotaku.listy.core.presentation.grayText
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AlertDialog(
     title: String,
-    message: String? = null,
+    message: String,
     confirmButtonText: String? = null,
     onConfirm: () -> Unit,
     onDismissRequest: () -> Unit
@@ -37,52 +35,50 @@ fun AlertDialog(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
+            VerticalSpacer_20dp()
             Text(
                 text = title,
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
                 fontSize = TextUnit(20f, TextUnitType.Sp),
                 fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Center,
-                color = gray
+                textAlign = TextAlign.Start,
+                color = grayText
             )
-            message?.let {
-                Text(
-                    text = it,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    fontSize = TextUnit(14f, TextUnitType.Sp),
-                    textAlign = TextAlign.Center,
-                    color = gray
-                )
-            }
+            VerticalSpacer_12dp()
+            Text(
+                text = message,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
+                fontSize = TextUnit(14f, TextUnitType.Sp),
+                textAlign = TextAlign.Start,
+                color = grayText
+            )
+            VerticalSpacer_12dp()
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                    .padding(horizontal = 20.dp),
+                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                SecondarySolidButton(
-                    modifier = Modifier
-                        .weight(1f),
+                SecondarySmallSolidButton(
                     text = confirmButtonText ?: stringResource(Res.string.alert_dialog_confirm),
-                    color = brightPink,
+                    color = brightRed,
                     onClick = {
                         onConfirm()
                         onDismissRequest()
                     },
                 )
-                HorizontalSpacer_16dp()
-                SolidButton(
-                    modifier = Modifier
-                        .weight(1f),
+                HorizontalSpacer_8dp()
+                SmallSolidButton(
                     text =  stringResource(Res.string.alert_dialog_dismiss),
                     onClick = {
                         onDismissRequest()
                     },
                 )
             }
+            VerticalSpacer_20dp()
         }
     }
 }

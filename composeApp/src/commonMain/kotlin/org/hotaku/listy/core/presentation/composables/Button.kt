@@ -2,7 +2,6 @@ package org.hotaku.listy.core.presentation.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import org.hotaku.listy.core.presentation.primaryBlue
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.background
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -44,7 +43,7 @@ fun SolidButton(
         colors = ButtonDefaults.buttonColors().copy(
             disabledContainerColor = color.copy(alpha = .5f),
             containerColor = color,
-            contentColor = powder
+            contentColor = background
         )
     ) {
         Text(
@@ -58,6 +57,41 @@ fun SolidButton(
 @Composable
 fun SolidButtonPreview() {
     SolidButton(
+        text = "Hello",
+        onClick = {}
+    )
+}
+
+@Composable
+fun SmallSolidButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = primaryBlue,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        shape = RoundedCornerShape(16.dp),
+        colors = ButtonDefaults.buttonColors().copy(
+            disabledContainerColor = color.copy(alpha = .5f),
+            containerColor = color,
+            contentColor = background
+        )
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun SmallSolidButtonPreview() {
+    SmallSolidButton(
         text = "Hello",
         onClick = {}
     )
@@ -93,9 +127,48 @@ fun SecondarySolidButton(
 @Composable
 fun SecondarySolidButtonPreview() {
     Surface(
-        color = powder
+        color = background
     ) {
         SecondarySolidButton(
+            text = "Hello",
+            onClick = {}
+        )
+    }
+}
+
+@Composable
+fun SecondarySmallSolidButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = primaryBlue,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+) {
+    FilledTonalButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        shape = RoundedCornerShape(16.dp),
+        colors = ButtonDefaults.filledTonalButtonColors().copy(
+            disabledContainerColor = color.copy(alpha = .05f),
+            containerColor =  color.copy(alpha = .2f),
+            contentColor = color
+        )
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun SecondarySmallSolidButtonPreview() {
+    Surface(
+        color = background
+    ) {
+        SecondarySmallSolidButton(
             text = "Hello",
             onClick = {}
         )
@@ -123,7 +196,7 @@ fun TopBarIconButton(
 @Composable
 fun TopBarIconButtonPreview() {
     Surface(
-        color = powder
+        color = background
     ) {
         TopBarIconButton(
             onClick = {}
@@ -140,7 +213,7 @@ fun SolidIconButton(
         onClick = onClick,
         colors = CardDefaults.cardColors().copy(
             containerColor = primaryBlue,
-            contentColor = powder
+            contentColor = background
         )
     ) {
         Box(

@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import listy.composeapp.generated.resources.Res
-import listy.composeapp.generated.resources.empty
+import listy.composeapp.generated.resources.empty_listy
 import listy.composeapp.generated.resources.empty_state_error_message
 import listy.composeapp.generated.resources.load_data_error
 import org.hotaku.listy.core.presentation.primaryBlue
@@ -94,7 +94,7 @@ fun ProductListScreenContent(
                 } else {
                     ProductsCategoriesTabs(
                         tabs = state.categories,
-                        selectedTabIndex = state.selectedCategory,
+                        selectedTabId = state.selectedCategory,
                         onTabClick = { onIntent(OnTabChange(tabIndex = it)) },
                     )
 
@@ -142,7 +142,7 @@ private fun SucessState(
             contentAlignment = Alignment.Center
         ) {
             Message(
-                vectorRes = vectorResource(Res.drawable.empty),
+                vectorRes = vectorResource(Res.drawable.empty_listy),
                 message = stringResource(Res.string.empty_state_error_message)
             )
         }

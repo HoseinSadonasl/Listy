@@ -2,7 +2,6 @@ package org.hotaku.listy.product.presentation.product_list.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,14 +17,15 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import org.hotaku.listy.core.presentation.brightBackgroundBlue
 import org.hotaku.listy.core.presentation.brightBackgroundGray
-import org.hotaku.listy.core.presentation.brightBlue
-import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.DefaultCard
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_8dp
 import org.hotaku.listy.core.presentation.disableGray
-import org.hotaku.listy.core.presentation.gray
-import org.hotaku.listy.core.presentation.powder
+import org.hotaku.listy.core.presentation.background
+import org.hotaku.listy.core.presentation.brightBackgroundGrayUnFocused
+import org.hotaku.listy.core.presentation.brightBlue
+import org.hotaku.listy.core.presentation.brightGray
+import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.UiProduct
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -37,7 +37,7 @@ fun ProductItem(
     onDoneClick: () -> Unit,
 ) {
     DefaultCard(
-        cardColor = if (product.done) brightBackgroundGray else brightBackgroundBlue,
+        cardColor = if (product.done) brightBackgroundGrayUnFocused else brightBackgroundGray,
         content = {
             Column(
                 modifier = modifier
@@ -52,11 +52,12 @@ fun ProductItem(
                     Text(
                         text = product.name,
                         fontSize = TextUnit(20f, TextUnitType.Sp),
-                        color = if (product.done) disableGray else primaryBlue,
+                        color = if (product.done) grayTextUnFocused else primaryBlue,
                         textDecoration = TextDecoration.LineThrough.takeIf { product.done }
                     )
 
                     CheckBox(
+                        enabled = !product.done,
                         isChecked = product.done,
                         onCheckedChange = { onDoneClick() }
                     )
@@ -64,7 +65,7 @@ fun ProductItem(
 
                 Text(
                     text = product.description,
-                    color = disableGray,
+                    color = grayTextUnFocused,
                     textDecoration = TextDecoration.LineThrough.takeIf { product.done }
                 )
             }
@@ -75,7 +76,7 @@ fun ProductItem(
 @Preview
 @Composable
 fun ProductItemPreview() {
-    Column (modifier = Modifier.background(powder).padding(16.dp)) {
+    Column (modifier = Modifier.background(background).padding(16.dp)) {
         ProductItem(
             product = UiProduct(
                 id = 1,
