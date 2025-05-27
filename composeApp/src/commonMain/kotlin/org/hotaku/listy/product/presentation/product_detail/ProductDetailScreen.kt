@@ -3,10 +3,12 @@ package org.hotaku.listy.product.presentation.product_detail
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -20,13 +22,14 @@ import listy.composeapp.generated.resources.product_screen_delete_dialog_confirm
 import listy.composeapp.generated.resources.product_screen_delete_dialog_message
 import listy.composeapp.generated.resources.product_screen_delete_dialog_title
 import listy.composeapp.generated.resources.product_screen_the_item_is_sold
+import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.composables.AlertDialog
 import org.hotaku.listy.core.presentation.composables.TopRoundedCard
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_24dp
-import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.NavigateBack
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.ShowSnackbar
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnCategoryNameChange
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDeleteClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDoneClick
@@ -43,6 +46,8 @@ import org.hotaku.listy.product.presentation.product_detail.composables.EditCate
 import org.hotaku.listy.product.presentation.product_detail.composables.EditProduct
 import org.hotaku.listy.product.presentation.product_detail.composables.ProductDetailScreenScaffold
 import org.hotaku.listy.product.presentation.product_detail.composables.categories
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -54,16 +59,22 @@ fun ProductDetailScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
     LaunchedEffect(viewModel.event) {
         viewModel.event.collectLatest { event ->
             when (event) {
                 is NavigateBack -> onBackClick()
+                is ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(message = getString(event.messageRes))
+                }
             }
         }
     }
 
     ProductDetailScreenContent(
         state = state,
+        snackbarHostState = snackbarHostState,
         onBackClick = onBackClick,
         onIntent = viewModel::onIntent,
     )
@@ -72,6 +83,7 @@ fun ProductDetailScreen(
 @Composable
 fun ProductDetailScreenContent(
     state: ProductDetailScreenState,
+    snackbarHostState: SnackbarHostState,
     onBackClick: () -> Unit,
     onIntent: (ProductDetailScreenIntent) -> Unit,
 ) {
@@ -91,6 +103,7 @@ fun ProductDetailScreenContent(
     ProductDetailScreenScaffold(
         title = state.product?.name,
         onNavigateBack = onBackClick,
+        snackbarHostState = snackbarHostState,
         onDeleteClick = { onIntent(OnDeleteClick) }.takeIf { state.product != null },
         content = {
 
@@ -179,6 +192,7 @@ fun ProductScreenPreview() {
             category = categories[1],
             isLoading = false,
         ),
+        snackbarHostState = remember { SnackbarHostState() },
         onBackClick = {},
         onIntent = {},
     )

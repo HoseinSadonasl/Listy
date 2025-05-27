@@ -5,26 +5,26 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.add_listy
 import listy.composeapp.generated.resources.product_screen_title
 import org.hotaku.listy.core.presentation.background
+import org.hotaku.listy.core.presentation.composables.SnackBar
 import org.hotaku.listy.core.presentation.composables.TopBarIconButton
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
 import org.hotaku.listy.core.presentation.primaryBlue
@@ -36,6 +36,7 @@ import org.jetbrains.compose.resources.vectorResource
 fun ProductDetailScreenScaffold(
     modifier: Modifier = Modifier,
     title: String? = null,
+    snackbarHostState: SnackbarHostState,
     onNavigateBack: () -> Unit,
     onDeleteClick: (() -> Unit)?,
     content: @Composable ColumnScope.() -> Unit
@@ -54,6 +55,13 @@ fun ProductDetailScreenScaffold(
                         )
                     }
                 }
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(32.dp),
+                snackbar = { SnackBar(message = it.visuals.message,) }
             )
         },
         containerColor = primaryBlue,

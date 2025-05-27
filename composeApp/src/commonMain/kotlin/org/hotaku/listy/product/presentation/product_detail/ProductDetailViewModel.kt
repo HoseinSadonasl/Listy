@@ -13,20 +13,36 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
+import listy.composeapp.generated.resources.Res
+import listy.composeapp.generated.resources.product_screen_category_name_empty_errr_message
 import org.hotaku.listy.category.domain.usecases.AddCategoryUseCase
 import org.hotaku.listy.category.domain.usecases.GetCategoriesUseCase
 import org.hotaku.listy.category.presentation.UiCategory
 import org.hotaku.listy.category.presentation.asCategory
 import org.hotaku.listy.category.presentation.asUiCategory
 import org.hotaku.listy.product.domain.model.Product
-import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.*
-import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.*
-import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
 import org.hotaku.listy.product.domain.usecases.DeleteProductUseCase
 import org.hotaku.listy.product.domain.usecases.GetProductUseCase
+import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.asProduct
 import org.hotaku.listy.product.presentation.asUiProduct
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.NavigateBack
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.ShowSnackbar
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnBackClick
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnCategoryNameChange
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDeleteClick
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDeleteProduct
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDoneClick
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnEditCategory
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnHideDeleteDialog
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnNewCategory
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnProductDetailDescriptionChanged
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnProductDetailDoneChanged
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnProductDetailNameChanged
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSaveCategory
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSaveClick
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSetProductCategory
 
 class ProductDetailViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -220,6 +236,10 @@ class ProductDetailViewModel(
 
     private fun upsertCategory() {
         _state.value.category?.let { category ->
+            if (category.name.isBlank()) {
+                sendEvent(ShowSnackbar(messageRes = Res.string.product_screen_category_name_empty_errr_message))
+                return
+            }
             viewModelScope.launch() {
                 addCategoryUseCase(category = category.asCategory())
                 _state.update {

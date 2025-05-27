@@ -14,6 +14,7 @@
     <string name="alert_dialog_dismiss">Cancel</string>
     <string name="product_list_screen_all">All</string>
     <string name="product_screen_new_category_placeholder">Category name</string>
+    <string name="product_screen_category_name_empty_errr_message">Category name cannot be empty.</string>
     <string name="product_screen_delete_dialog_title">Delete Product</string>
     <string name="product_screen_delete_dialog_message">Are you sure you want to delete this product?</string>
     <string name="product_screen_delete_dialog_confirm_delete">Delete</string>
