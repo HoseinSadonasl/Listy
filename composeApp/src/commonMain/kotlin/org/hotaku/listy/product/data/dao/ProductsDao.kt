@@ -16,8 +16,8 @@ interface ProductsDao {
     @Delete
     suspend fun deleteProduct(product: ProductEntity)
 
-    @Query("SELECT * FROM products WHERE :categoryId IS NULL OR categoryId = :categoryId")
-    fun getProducts(categoryId: Int?): Flow<List<ProductEntity>>
+    @Query("SELECT * FROM products WHERE (:categoryId IS NULL OR categoryId = :categoryId) AND importance = :importance")
+    fun getProducts(categoryId: Int?, importance: String): Flow<List<ProductEntity>>
 
     @Query("SELECT * FROM products WHERE id = :productId")
     suspend fun getProduct(productId: Int?): ProductEntity

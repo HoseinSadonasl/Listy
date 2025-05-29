@@ -1,5 +1,6 @@
 package org.hotaku.listy.core.presentation.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -54,6 +55,7 @@ fun TopRoundedCardPreview() {
 fun DefaultCard(
     modifier: Modifier = Modifier,
     cardColor: Color = background,
+    borderColor: Color? = null,
     content: @Composable () -> Unit
 ) {
     Card(
@@ -61,6 +63,7 @@ fun DefaultCard(
         colors = CardDefaults.cardColors().copy(
             containerColor = cardColor,
         ),
+        border = borderColor?.let { BorderStroke(width = 1.dp, color = it) },
         shape = RoundedCornerShape(24.dp)
     ) {
         content()

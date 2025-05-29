@@ -7,6 +7,6 @@ import org.hotaku.listy.product.domain.repository.ProductsRepository
 class GetProductsUseCase(
     private val productsRepository: ProductsRepository,
 ) {
-    operator fun invoke(categoryId: Int?): Flow<List<Product>> =
-        productsRepository.getProducts(categoryId = categoryId)
+    operator fun invoke(categoryId: Int?, importance: String): Flow<List<Product>> =
+        productsRepository.getProducts(categoryId = categoryId, importance = importance)
 }

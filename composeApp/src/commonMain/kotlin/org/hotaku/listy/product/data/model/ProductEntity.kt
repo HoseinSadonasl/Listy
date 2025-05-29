@@ -10,6 +10,7 @@ data class ProductEntity(
     val name: String,
     val description: String,
     val categoryId: Int,
+    val importance: String,
     val done: Boolean,
     val createdTimestamp: Long
 )
@@ -19,6 +20,7 @@ fun ProductEntity.asProduct(): Product = Product(
     name = name,
     description = description,
     categoryId = categoryId,
+    importance = importance,
     done = done,
     createdTimestamp = createdTimestamp,
 )
@@ -28,6 +30,7 @@ fun Product.asEntity(): ProductEntity = ProductEntity(
     name = name,
     description = description,
     categoryId = categoryId,
+    importance = importance,
     done = done,
     createdTimestamp = createdTimestamp,
 )

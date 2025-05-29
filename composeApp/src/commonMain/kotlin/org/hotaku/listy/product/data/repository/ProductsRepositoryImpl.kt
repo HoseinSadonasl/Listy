@@ -16,8 +16,11 @@ class ProductsRepositoryImpl(
     private val productsDao: ProductsDao,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ): ProductsRepository {
-    override fun getProducts(categoryId: Int?): Flow<List<Product>> =
-        productsDao.getProducts(categoryId = categoryId).map { products ->
+    override fun getProducts(categoryId: Int?, importance: String): Flow<List<Product>> =
+        productsDao.getProducts(
+            categoryId = categoryId,
+            importance = importance
+        ).map { products ->
             products.map { it.asProduct() }
         }
 

@@ -5,6 +5,7 @@ data class Product(
     val name: String,
     val description: String,
     val categoryId: Int,
+    val importance: String,
     val done: Boolean,
     val createdTimestamp: Long,
 )

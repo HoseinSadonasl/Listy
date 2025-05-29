@@ -13,3 +13,7 @@ val primaryBlue = Color(0xFF078DEE)
 val brightBlue = Color(0xFFCCF4FE)
 val brightRed = Color(0xFFFF5630)
 val background = Color(0xFFFCFDFD)
+
+val essential = Color(0xFFFF5630)
+val important = Color(0xFFFFAB00)
+val wants = Color(0xFF22C55E)
