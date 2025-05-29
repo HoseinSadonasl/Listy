@@ -1,5 +1,7 @@
 package org.hotaku.listy.product.presentation.product_list.composables
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.products_screen_title
-import org.hotaku.listy.core.presentation.composables.TopRoundedCard
 import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.jetbrains.compose.resources.stringResource
@@ -20,7 +21,7 @@ import org.jetbrains.compose.resources.stringResource
 fun ProductListScreenScaffold(
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -29,14 +30,14 @@ fun ProductListScreenScaffold(
                 title = stringResource(Res.string.products_screen_title),
             )
         },
-        containerColor = primaryBlue,
+        containerColor = background,
         floatingActionButton = { AddItemFab(onClick = onAddClick) },
         content = { paddingValues ->
-            TopRoundedCard(
+            Column (
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize(),
-                content = { content() }
+                content = content
             )
         },
     )

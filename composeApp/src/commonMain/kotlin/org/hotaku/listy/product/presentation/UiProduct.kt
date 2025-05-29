@@ -8,6 +8,7 @@ data class UiProduct(
     val name: String,
     val description: String,
     val categoryId: Int,
+    val importance: String,
     val done: Boolean = false,
     val dateCreated: Instant,
 )
@@ -17,6 +18,7 @@ fun Product.asUiProduct(): UiProduct = UiProduct(
     name = name,
     description = description,
     categoryId = categoryId,
+    importance = importance,
     done = done,
     dateCreated = Instant.fromEpochSeconds(createdTimestamp),
 )
@@ -26,6 +28,7 @@ fun UiProduct.asProduct(): Product = Product(
     name = name,
     description = description,
     categoryId = categoryId,
+    importance = importance,
     done = done,
     createdTimestamp = dateCreated.toEpochMilliseconds() / 1000,
 )

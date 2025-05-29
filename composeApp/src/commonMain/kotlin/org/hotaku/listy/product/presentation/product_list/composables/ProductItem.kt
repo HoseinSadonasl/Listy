@@ -72,13 +72,14 @@ fun ProductItem(
 @Preview
 @Composable
 fun ProductItemPreview() {
-    Column (modifier = Modifier.background(background).padding(16.dp)) {
+    Column(modifier = Modifier.background(background).padding(16.dp)) {
         ProductItem(
             product = UiProduct(
                 id = 1,
                 name = "Sample Product",
                 description = "This is a sample product description.",
                 categoryId = 1,
+                importance = "important",
                 done = true,
                 dateCreated = Clock.System.now(),
             ),
@@ -91,6 +92,7 @@ fun ProductItemPreview() {
                 name = "Sample Product",
                 description = "This is a sample product description.",
                 categoryId = 1,
+                importance = "important",
                 done = false,
                 dateCreated = Clock.System.now(),
             ),

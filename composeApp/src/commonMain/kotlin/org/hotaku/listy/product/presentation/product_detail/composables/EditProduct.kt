@@ -24,6 +24,7 @@ import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.SolidButton
 import org.hotaku.listy.core.presentation.composables.TextInput
 import org.hotaku.listy.core.presentation.grayText
+import org.hotaku.listy.product.presentation.Importance
 import org.hotaku.listy.product.presentation.UiProduct
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -98,6 +99,7 @@ fun EditProductPreview() {
                 description = "Item description \nItem description \nItem description",
                 categoryId = 1,
                 done = true,
+                importance = "important",
                 dateCreated = System.now(),
             ),
             onTitleChange = {},

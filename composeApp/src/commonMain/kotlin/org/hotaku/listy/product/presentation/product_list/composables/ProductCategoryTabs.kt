@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
@@ -16,6 +17,7 @@ import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.product_list_screen_all
 import org.hotaku.listy.category.presentation.UiCategory
 import org.hotaku.listy.core.presentation.background
+import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.jetbrains.compose.resources.stringResource
@@ -40,9 +42,15 @@ fun ProductsCategoriesTabs(
                 height = 2.dp
             )
         },
-        divider = {},
+        divider = {
+            HorizontalDivider(
+                color = brightGray,
+                thickness = 1.dp
+            )
+        },
         tabs = {
             CategoryTab(
+                modifier = Modifier.fillMaxWidth(),
                 title = stringResource(Res.string.product_list_screen_all),
                 selected = selectedTabId == 0,
                 onTabClick = { onTabClick(0) }
@@ -60,11 +68,13 @@ fun ProductsCategoriesTabs(
 
 @Composable
 private fun CategoryTab(
+    modifier: Modifier = Modifier,
     title: String,
     selected: Boolean = false,
     onTabClick: () -> Unit
 ) {
     Tab(
+        modifier = modifier,
         text = { Text(text = title) },
         selected = selected,
         selectedContentColor = primaryBlue,

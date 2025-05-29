@@ -18,6 +18,7 @@ import org.hotaku.listy.category.presentation.asUiCategory
 import org.hotaku.listy.product.domain.model.Product
 import org.hotaku.listy.product.domain.usecases.GetProductsUseCase
 import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
+import org.hotaku.listy.product.presentation.ImportanceEnum
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.asProduct
 import org.hotaku.listy.product.presentation.asUiProduct
@@ -48,6 +49,7 @@ class ProductListViewModel(
         when (intent) {
             is ProductListScreenIntent.OnUpdateList -> updateList()
             ProductListScreenIntent.OnNewProduct -> initNewProduct()
+            is ProductListScreenIntent.OnImportanceChange -> setSelectedImportance(importance = intent.importance)
             is ProductListScreenIntent.OnTabChange -> setSelectedTab(tabIndex = intent.tabIndex)
             is ProductListScreenIntent.OnDoneClick -> setProductDone(product = intent.product)
             is ProductListScreenIntent.OnProductItemClick -> onOpenProduct(productId = intent.productId)
@@ -71,6 +73,14 @@ class ProductListViewModel(
         }
     }
 
+    private fun setSelectedImportance(importance: ImportanceEnum) {
+        _state.update {
+            it.copy(
+                selectedImportance = importance
+            )
+        }
+    }
+
     private fun setSelectedTab(tabIndex: Int) {
         _state.update {
             it.copy(
@@ -89,7 +99,9 @@ class ProductListViewModel(
         viewModelScope.launch {
             getCategoriesUseCase()
                 .combine(getProductsUseCase(
-                    categoryId = _state.value.selectedCategory.takeIf { it > 0  })
+                    categoryId = _state.value.selectedCategory.takeIf { it > 0  },
+                    importance =_state.value.selectedImportance.name
+                ),
                 ) { categories, products ->
                     categories.map { it.asUiCategory() } to products.map { it.asUiProduct() }
                 }
