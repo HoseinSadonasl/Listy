@@ -1,29 +1,25 @@
 package org.hotaku.listy.product.presentation.product_list.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.hotaku.listy.core.presentation.brightBackgroundGray
 import org.hotaku.listy.core.presentation.composables.DefaultCard
+import org.hotaku.listy.core.presentation.composables.ImportanceDot
 import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.hotaku.listy.product.presentation.productImportance
@@ -53,20 +49,7 @@ fun ImportanceCategory(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clip(RoundedCornerShape(percent = 50))
-                        .background(color.copy(alpha = .2f))
-                        .padding(6.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .matchParentSize()
-                            .clip(RoundedCornerShape(percent = 50))
-                            .background(color).padding(8.dp)
-                    )
-                }
+                ImportanceDot(color = color)
                 Text(
                     text = category,
                     fontSize = 16.sp,
@@ -84,6 +67,8 @@ fun ImportanceCategory(
         }
     }
 }
+
+
 
 @Preview
 @Composable

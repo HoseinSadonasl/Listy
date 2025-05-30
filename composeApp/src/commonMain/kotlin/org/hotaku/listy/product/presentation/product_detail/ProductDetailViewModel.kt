@@ -24,9 +24,12 @@ import org.hotaku.listy.product.domain.model.Product
 import org.hotaku.listy.product.domain.usecases.DeleteProductUseCase
 import org.hotaku.listy.product.domain.usecases.GetProductUseCase
 import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
+import org.hotaku.listy.product.presentation.Importance
+import org.hotaku.listy.product.presentation.ImportanceEnum
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.asProduct
 import org.hotaku.listy.product.presentation.asUiProduct
+import org.hotaku.listy.product.presentation.productImportance
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.NavigateBack
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.ShowSnackbar
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnBackClick
@@ -36,9 +39,11 @@ import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenI
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDoneClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnEditCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnHideDeleteDialog
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceChanged
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceClick
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceDismissRequest
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnNewCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnProductDetailDescriptionChanged
-import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnProductDetailDoneChanged
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnProductDetailNameChanged
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSaveCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSaveClick
@@ -82,7 +87,9 @@ class ProductDetailViewModel(
             is OnEditCategory -> editCategory(intent.id)
             is OnSetProductCategory -> setCategory(intent.id)
             is OnCategoryNameChange -> setCategoryName(query = intent.categoryName)
-            is OnProductDetailDoneChanged -> {}
+            is OnImportanceChanged -> setProductImportance(importance = intent.importance)
+            OnImportanceClick-> showImportanceMenu()
+            OnImportanceDismissRequest -> showImportanceMenu(show = false)
         }
     }
 
@@ -126,6 +133,7 @@ class ProductDetailViewModel(
             name = "",
             description = "",
             categoryId = 0,
+            importance = productImportance.first(),
             dateCreated = Clock.System.now()
         )
         _state.update {
@@ -156,6 +164,24 @@ class ProductDetailViewModel(
         _state.update {
             it.copy(
                 product = it.product?.copy(name = name)
+            )
+        }
+    }
+
+    private fun showImportanceMenu(show: Boolean = true) {
+        _state.update {
+            it.copy(
+                importanceExpended = show
+            )
+        }
+
+    }
+
+    private fun setProductImportance(importance: Importance) {
+        createNewProductIfNotExist()
+        _state.update {
+            it.copy(
+                product = it.product?.copy(importance = importance)
             )
         }
     }

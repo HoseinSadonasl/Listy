@@ -24,6 +24,7 @@ import org.hotaku.listy.core.presentation.composables.VerticalSpacer_8dp
 import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.UiProduct
+import org.hotaku.listy.product.presentation.productImportance
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -79,7 +80,7 @@ fun ProductItemPreview() {
                 name = "Sample Product",
                 description = "This is a sample product description.",
                 categoryId = 1,
-                importance = "important",
+                importance = productImportance.first(),
                 done = true,
                 dateCreated = Clock.System.now(),
             ),
@@ -92,7 +93,7 @@ fun ProductItemPreview() {
                 name = "Sample Product",
                 description = "This is a sample product description.",
                 categoryId = 1,
-                importance = "important",
+                importance = productImportance.first(),
                 done = false,
                 dateCreated = Clock.System.now(),
             ),

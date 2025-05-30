@@ -1,5 +1,7 @@
 package org.hotaku.listy.product.presentation.product_detail
 
+import org.hotaku.listy.product.presentation.Importance
+
 sealed interface ProductDetailScreenIntent {
     object OnBackClick : ProductDetailScreenIntent
     object OnSaveClick : ProductDetailScreenIntent
@@ -9,10 +11,13 @@ sealed interface ProductDetailScreenIntent {
     object OnHideDeleteDialog : ProductDetailScreenIntent
     data class OnProductDetailNameChanged(val name: String) : ProductDetailScreenIntent
     data class OnProductDetailDescriptionChanged(val description: String) : ProductDetailScreenIntent
-    data class OnProductDetailDoneChanged(val done: Boolean) : ProductDetailScreenIntent
     object OnNewCategory : ProductDetailScreenIntent
     object OnSaveCategory : ProductDetailScreenIntent
     data class OnEditCategory(val id: Int) : ProductDetailScreenIntent
     data class OnSetProductCategory(val id: Int) : ProductDetailScreenIntent
     data class OnCategoryNameChange(val categoryName: String) : ProductDetailScreenIntent
+    object OnImportanceClick : ProductDetailScreenIntent
+    object OnImportanceDismissRequest : ProductDetailScreenIntent
+    data class OnImportanceChanged(val importance: Importance) : ProductDetailScreenIntent
+
 }

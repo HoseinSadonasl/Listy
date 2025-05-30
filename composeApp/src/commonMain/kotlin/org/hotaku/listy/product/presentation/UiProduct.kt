@@ -8,7 +8,7 @@ data class UiProduct(
     val name: String,
     val description: String,
     val categoryId: Int,
-    val importance: String,
+    val importance: Importance,
     val done: Boolean = false,
     val dateCreated: Instant,
 )
@@ -18,7 +18,9 @@ fun Product.asUiProduct(): UiProduct = UiProduct(
     name = name,
     description = description,
     categoryId = categoryId,
-    importance = importance,
+    importance = productImportance.find {
+        it.importance.name == importance
+    } ?: productImportance.first(),
     done = done,
     dateCreated = Instant.fromEpochSeconds(createdTimestamp),
 )
@@ -28,7 +30,7 @@ fun UiProduct.asProduct(): Product = Product(
     name = name,
     description = description,
     categoryId = categoryId,
-    importance = importance,
+    importance = importance.importance.name,
     done = done,
     createdTimestamp = dateCreated.toEpochMilliseconds() / 1000,
 )

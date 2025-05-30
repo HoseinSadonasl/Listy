@@ -9,4 +9,5 @@ data class ProductDetailScreenState(
     val categories: List<UiCategory> = emptyList(),
     val category: UiCategory? = null,
     val showDeleteDialog: Boolean = false,
+    val importanceExpended: Boolean = false,
 )

@@ -12,6 +12,7 @@
     <string name="product_screen_title">New Product</string>
     <string name="alert_dialog_confirm">Ok</string>
     <string name="alert_dialog_dismiss">Cancel</string>
+    <string name="edit_product_category_importance">Importance</string>
     <string name="category_essentials">Essentials</string>
     <string name="category_essentials_description">Survival. Needs for daily life/health.</string>
     <string name="category_important">Important</string>

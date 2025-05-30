@@ -14,7 +14,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.Clock
 import listy.composeapp.generated.resources.Res
@@ -31,9 +29,6 @@ import listy.composeapp.generated.resources.empty_state_error_message
 import listy.composeapp.generated.resources.load_data_error
 import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_16dp
 import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_8dp
-import org.hotaku.listy.core.presentation.composables.TopRoundedCard
-import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
-import org.hotaku.listy.core.presentation.composables.VerticalSpacer_8dp
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.productImportance
@@ -213,7 +208,7 @@ val products = listOf<UiProduct>(
         name = "Product 1",
         description = "Description of Product 1",
         categoryId = 1,
-        importance = "important",
+        importance = productImportance.first(),
         done = false,
         dateCreated = Clock.System.now()
     ),
@@ -222,7 +217,7 @@ val products = listOf<UiProduct>(
         name = "Product 2",
         description = "Description of Product 2",
         categoryId = 2,
-        importance = "important",
+        importance = productImportance.first(),
         done = true,
         dateCreated = Clock.System.now()
     ),
@@ -231,7 +226,7 @@ val products = listOf<UiProduct>(
         name = "Product 3",
         description = "Description of Product 3",
         categoryId = 3,
-        importance = "important",
+        importance = productImportance.first(),
         done = false,
         dateCreated = Clock.System.now()
     )
