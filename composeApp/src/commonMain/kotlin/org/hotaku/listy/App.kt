@@ -1,8 +1,7 @@
 package org.hotaku.listy
 
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,7 +22,20 @@ fun App(
         navController = navController,
         startDestination = ProductListScreenRoute
     ) {
-        composable<ProductListScreenRoute> {
+        composable<ProductListScreenRoute>(
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(1000)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1000)
+                )
+            }
+        ) {
             ProductListScreen(
                 navigateToProductScreen = { id ->
                     navController.navigate(ProductDetailScreenRoute(productId = id))
@@ -31,8 +43,18 @@ fun App(
             )
         }
         composable<ProductDetailScreenRoute>(
-            enterTransition = { slideInHorizontally() },
-            exitTransition = { slideOutHorizontally() }
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1000)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(1000)
+                )
+            }
         ) {
             ProductDetailScreen(
                 onBackClick = {
