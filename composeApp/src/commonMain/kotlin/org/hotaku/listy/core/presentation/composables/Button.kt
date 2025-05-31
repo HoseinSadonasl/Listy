@@ -14,17 +14,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.core.presentation.background
+import org.hotaku.listy.core.presentation.primaryBlue
+import org.hotaku.listy.core.presentation.whiteContent
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -39,16 +38,16 @@ fun SolidButton(
         onClick = onClick,
         modifier = modifier.height(56.dp),
         enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.buttonColors().copy(
             disabledContainerColor = color.copy(alpha = .5f),
             containerColor = color,
-            contentColor = background
+            contentColor = whiteContent
         )
     ) {
-        Text(
+        LabelText(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
+            color = whiteContent
         )
     }
 }
@@ -74,16 +73,16 @@ fun SmallSolidButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.buttonColors().copy(
             disabledContainerColor = color.copy(alpha = .5f),
             containerColor = color,
-            contentColor = background
+            contentColor = whiteContent
         )
     ) {
-        Text(
+        LabelText(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
+            color = whiteContent
         )
     }
 }
@@ -109,16 +108,16 @@ fun SecondarySolidButton(
         onClick = onClick,
         modifier = modifier.height(56.dp),
         enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.filledTonalButtonColors().copy(
             disabledContainerColor = color.copy(alpha = .05f),
-            containerColor =  color.copy(alpha = .2f),
+            containerColor = color.copy(alpha = .2f),
             contentColor = color
         )
     ) {
-        Text(
+        LabelText(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
+            color = color
         )
     }
 }
@@ -148,16 +147,16 @@ fun SecondarySmallSolidButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(24.dp),
         colors = ButtonDefaults.filledTonalButtonColors().copy(
             disabledContainerColor = color.copy(alpha = .05f),
-            containerColor =  color.copy(alpha = .2f),
+            containerColor = color.copy(alpha = .2f),
             contentColor = color
         )
     ) {
-        Text(
+        LabelText(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
+            color = color
         )
     }
 }
@@ -209,11 +208,11 @@ fun SolidIconButton(
     onClick: () -> Unit,
     icon: ImageVector = Icons.Default.Done,
 ) {
-    Card (
+    Card(
         onClick = onClick,
         colors = CardDefaults.cardColors().copy(
             containerColor = primaryBlue,
-            contentColor = background
+            contentColor = whiteContent
         )
     ) {
         Box(

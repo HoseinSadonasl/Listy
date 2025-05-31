@@ -6,21 +6,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import org.hotaku.listy.core.presentation.background
-import org.hotaku.listy.core.presentation.brightBackgroundGray
-import org.hotaku.listy.core.presentation.brightBackgroundGrayUnFocused
+import org.hotaku.listy.core.presentation.cardBackgroundGray
+import org.hotaku.listy.core.presentation.cardBrightBackgroundGray
+import org.hotaku.listy.core.presentation.composables.CaptionText
 import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.DefaultCard
+import org.hotaku.listy.core.presentation.composables.TitleText
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_8dp
+import org.hotaku.listy.core.presentation.disableGray
 import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.hotaku.listy.product.presentation.UiProduct
@@ -34,7 +34,7 @@ fun ProductItem(
     onDoneClick: () -> Unit,
 ) {
     DefaultCard(
-        cardColor = if (product.done) brightBackgroundGrayUnFocused else brightBackgroundGray,
+        cardColor = if (product.done) cardBrightBackgroundGray else cardBackgroundGray,
         content = {
             Column(
                 modifier = modifier
@@ -46,10 +46,9 @@ fun ProductItem(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
+                    TitleText(
                         text = product.name,
-                        fontSize = TextUnit(20f, TextUnitType.Sp),
-                        color = if (product.done) grayTextUnFocused else primaryBlue,
+                        color = if (product.done) disableGray else primaryBlue,
                         textDecoration = TextDecoration.LineThrough.takeIf { product.done }
                     )
 
@@ -59,12 +58,13 @@ fun ProductItem(
                         onCheckedChange = { onDoneClick() }
                     )
                 }
-
-                Text(
-                    text = product.description,
-                    color = grayTextUnFocused,
-                    textDecoration = TextDecoration.LineThrough.takeIf { product.done }
-                )
+                if (product.description.isNotEmpty()) {
+                    CaptionText(
+                        text = product.description,
+                        color = if (product.done) disableGray else grayTextUnFocused,
+                        textDecoration = TextDecoration.LineThrough.takeIf { product.done }
+                    )
+                }
             }
         }
     )
@@ -92,6 +92,19 @@ fun ProductItemPreview() {
                 id = 1,
                 name = "Sample Product",
                 description = "This is a sample product description.",
+                categoryId = 1,
+                importance = productImportance.first(),
+                done = false,
+                dateCreated = Clock.System.now(),
+            ),
+            onDoneClick = {}
+        )
+        VerticalSpacer_8dp()
+        ProductItem(
+            product = UiProduct(
+                id = 1,
+                name = "Sample Product",
+                description = "",
                 categoryId = 1,
                 importance = productImportance.first(),
                 done = false,

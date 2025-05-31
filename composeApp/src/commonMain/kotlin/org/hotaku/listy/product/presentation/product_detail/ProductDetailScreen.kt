@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,8 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -31,8 +28,8 @@ import listy.composeapp.generated.resources.product_screen_rename_category_dialo
 import listy.composeapp.generated.resources.product_screen_the_item_is_sold
 import org.hotaku.listy.core.presentation.composables.AlertDialog
 import org.hotaku.listy.core.presentation.composables.InputDialog
+import org.hotaku.listy.core.presentation.composables.TitleText
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
-import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.productImportance
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenEvent.NavigateBack
@@ -149,12 +146,11 @@ fun ProductDetailScreenContent(
             }
 
             if (state.product?.done == true) {
-                Text(
+                TitleText(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     text = stringResource(Res.string.product_screen_the_item_is_sold),
-                    color = grayText,
-                    textAlign = TextAlign.Center,
-                    fontSize = TextUnit(20f, TextUnitType.Sp),
+                    align = TextAlign.Center,
+                    maxLine = 2
                 )
             }
 

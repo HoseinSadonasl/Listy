@@ -9,12 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock.System
 import listy.composeapp.generated.resources.Res
@@ -23,12 +20,12 @@ import listy.composeapp.generated.resources.all_button_save
 import listy.composeapp.generated.resources.product_screen_complete
 import listy.composeapp.generated.resources.products_screen_title
 import org.hotaku.listy.core.presentation.background
-import org.hotaku.listy.core.presentation.brightBackgroundGrayUnFocused
+import org.hotaku.listy.core.presentation.brightBackgroundGray
+import org.hotaku.listy.core.presentation.composables.BodyText
 import org.hotaku.listy.core.presentation.composables.CheckBox
 import org.hotaku.listy.core.presentation.composables.DefaultCard
 import org.hotaku.listy.core.presentation.composables.SolidButton
 import org.hotaku.listy.core.presentation.composables.TextInput
-import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.product.presentation.Importance
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.productImportance
@@ -58,29 +55,20 @@ fun EditProduct(
             onValueChange = onTitleChange,
             placeholder = stringResource(Res.string.products_screen_title),
             modifier = Modifier.fillMaxWidth(),
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                textDecoration = if (product?.done == true) {
-                    TextDecoration.LineThrough
-                } else null
-            )
         )
         TextInput(
             value = product?.description.orEmpty(),
             onValueChange = onDescriptionChange,
             placeholder = stringResource(Res.string.add_product_description_placeholder),
             maxLines = 3,
+            singleLine = false,
             modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 112.dp),
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                textDecoration = if (product?.done == true) {
-                    TextDecoration.LineThrough
-                } else null
-            )
         )
         DefaultCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onImportanceClick() },
-            cardColor = brightBackgroundGrayUnFocused
+            cardColor = brightBackgroundGray
         ) {
             ImportanceCategory(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -91,17 +79,15 @@ fun EditProduct(
             )
         }
         DefaultCard(
-            cardColor = brightBackgroundGrayUnFocused
+            cardColor = brightBackgroundGray
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(12.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
+                BodyText(
                     text = stringResource(Res.string.product_screen_complete),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = grayText
                 )
                 CheckBox(
                     isChecked = product?.done == true,

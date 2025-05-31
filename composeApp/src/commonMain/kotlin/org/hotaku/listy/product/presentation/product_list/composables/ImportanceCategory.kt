@@ -9,18 +9,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import org.hotaku.listy.core.presentation.brightBackgroundGray
+import org.hotaku.listy.core.presentation.cardBrightBackgroundGray
+import org.hotaku.listy.core.presentation.composables.BodyText
+import org.hotaku.listy.core.presentation.composables.CaptionText
 import org.hotaku.listy.core.presentation.composables.DefaultCard
 import org.hotaku.listy.core.presentation.composables.ImportanceDot
-import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.hotaku.listy.product.presentation.productImportance
 import org.jetbrains.compose.resources.stringResource
@@ -36,7 +34,7 @@ fun ImportanceCategory(
     onClick: () -> Unit,
 ) {
     DefaultCard(
-        cardColor = brightBackgroundGray,
+        cardColor = cardBrightBackgroundGray,
         borderColor = if (selected) color else null,
     ) {
         Column(
@@ -50,19 +48,15 @@ fun ImportanceCategory(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ImportanceDot(color = color)
-                Text(
+                BodyText(
                     text = category,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = grayText,
+                    bold = true
                 )
             }
-            Text(
+            CaptionText(
                 text = description,
-                fontSize = 12.sp,
-                lineHeight = 16.sp,
+                maxLine = 2,
                 color = grayTextUnFocused,
-                maxLines = 2,
             )
         }
     }

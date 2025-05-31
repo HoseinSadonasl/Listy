@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.edit_product_category_importance
 import org.hotaku.listy.core.presentation.background
+import org.hotaku.listy.core.presentation.composables.BodyText
 import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_8dp
 import org.hotaku.listy.core.presentation.composables.ImportanceDot
 import org.hotaku.listy.core.presentation.grayText
@@ -36,10 +36,9 @@ fun ImportanceCategory(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
+        BodyText(
             modifier = Modifier.weight(1f),
             text = stringResource(Res.string.edit_product_category_importance),
-            color = grayText,
         )
         Box(
             contentAlignment = Alignment.CenterEnd,
@@ -49,7 +48,7 @@ fun ImportanceCategory(
             ) {
                 ImportanceDot(color = importance.color)
                 HorizontalSpacer_8dp()
-                Text(
+                BodyText(
                     text = stringResource(importance.title),
                     color = importance.color,
                 )
@@ -64,7 +63,7 @@ fun ImportanceCategory(
                 productImportance.forEach { item ->
                     DropdownMenuItem(
                         text = {
-                            Text(
+                            BodyText(
                                 text = stringResource(item.title),
                                 color = grayText
                             )

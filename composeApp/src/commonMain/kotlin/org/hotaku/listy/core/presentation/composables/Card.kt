@@ -58,11 +58,14 @@ fun DefaultCard(
     borderColor: Color? = null,
     content: @Composable () -> Unit
 ) {
+
+    val cardColors = CardDefaults.cardColors(
+        containerColor = cardColor,
+    )
+
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors().copy(
-            containerColor = cardColor,
-        ),
+        colors = cardColors,
         border = borderColor?.let { BorderStroke(width = 1.dp, color = it) },
         shape = RoundedCornerShape(24.dp)
     ) {

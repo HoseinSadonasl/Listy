@@ -9,22 +9,18 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.empty_listy
 import listy.composeapp.generated.resources.empty_state_error_message
 import listy.composeapp.generated.resources.warning_listy
 import org.hotaku.listy.core.presentation.background
-import org.hotaku.listy.core.presentation.gray
-import org.hotaku.listy.core.presentation.grayText
+import org.hotaku.listy.core.presentation.composables.BodyText
 import org.hotaku.listy.core.presentation.grayTextUnFocused
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -48,12 +44,11 @@ fun Message(
             imageVector = vectorRes,
             contentDescription = null,
         )
-        Text(
+        BodyText(
             modifier = Modifier
                 .padding(horizontal = 32.dp),
             text = message ?: stringResource(Res.string.empty_state_error_message),
-            fontSize = TextUnit(16f, TextUnitType.Sp),
-            textAlign = TextAlign.Center,
+            align = TextAlign.Center,
             color = grayTextUnFocused
         )
     }

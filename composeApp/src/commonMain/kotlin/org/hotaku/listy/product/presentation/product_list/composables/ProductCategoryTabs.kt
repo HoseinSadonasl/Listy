@@ -9,7 +9,6 @@ import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,6 +17,7 @@ import listy.composeapp.generated.resources.product_list_screen_all
 import org.hotaku.listy.category.presentation.UiCategory
 import org.hotaku.listy.core.presentation.background
 import org.hotaku.listy.core.presentation.brightGray
+import org.hotaku.listy.core.presentation.composables.BodyText
 import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.jetbrains.compose.resources.stringResource
@@ -75,7 +75,7 @@ private fun CategoryTab(
 ) {
     Tab(
         modifier = modifier,
-        text = { Text(text = title) },
+        text = { BodyText(text = title) },
         selected = selected,
         selectedContentColor = primaryBlue,
         unselectedContentColor = grayText,

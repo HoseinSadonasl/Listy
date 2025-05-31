@@ -3,14 +3,13 @@ package org.hotaku.listy.product.presentation.product_list.composables
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import org.hotaku.listy.core.presentation.composables.TopBarIconButton
 import org.hotaku.listy.core.presentation.background
+import org.hotaku.listy.core.presentation.composables.HeaderText
+import org.hotaku.listy.core.presentation.composables.TopBarIconButton
 import org.hotaku.listy.core.presentation.grayText
-import org.hotaku.listy.core.presentation.primaryBlue
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,10 +20,7 @@ fun TopBar(
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-            )
+            HeaderText(text = title)
         },
         navigationIcon = {
             onNavigationClick?.let {
@@ -40,5 +36,19 @@ fun TopBar(
             titleContentColor = grayText
         ),
         actions = actions
+    )
+}
+
+@Preview
+@Composable
+fun TopBarPreview() {
+    TopBar(
+        title = "Products",
+        onNavigationClick = {},
+        actions = {
+            TopBarIconButton(
+                onClick = {},
+            )
+        }
     )
 }

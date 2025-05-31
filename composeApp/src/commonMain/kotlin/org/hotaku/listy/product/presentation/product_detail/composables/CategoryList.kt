@@ -15,7 +15,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +27,7 @@ import org.hotaku.listy.core.presentation.brightBackgroundGray
 import org.hotaku.listy.core.presentation.brightBlue
 import org.hotaku.listy.core.presentation.brightGray
 import org.hotaku.listy.core.presentation.composables.HorizontalSpacer_16dp
-import org.hotaku.listy.core.presentation.gray
+import org.hotaku.listy.core.presentation.composables.LabelText
 import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.core.presentation.primaryBlue
 import org.jetbrains.compose.resources.stringResource
@@ -83,7 +82,7 @@ private fun AddCategory(
         modifier = Modifier.height(40.dp),
         onClick = onClick,
         label = {
-            Text(
+            LabelText(
                 text = stringResource(Res.string.add_category_chip_label),
             )
         },
@@ -128,8 +127,9 @@ private fun CategoryItem(
             onClick = onClick,
             border = null,
             label = {
-                Text(
+                LabelText(
                     text = category.name,
+                    color = if (isSelected) primaryBlue else grayText,
                 )
             },
             colors = colors,
