@@ -25,7 +25,6 @@ import org.hotaku.listy.product.domain.usecases.DeleteProductUseCase
 import org.hotaku.listy.product.domain.usecases.GetProductUseCase
 import org.hotaku.listy.product.domain.usecases.UpsertProductUseCase
 import org.hotaku.listy.product.presentation.Importance
-import org.hotaku.listy.product.presentation.ImportanceEnum
 import org.hotaku.listy.product.presentation.UiProduct
 import org.hotaku.listy.product.presentation.asProduct
 import org.hotaku.listy.product.presentation.asUiProduct
@@ -39,6 +38,7 @@ import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenI
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDoneClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnEditCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnHideDeleteDialog
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnHideEditCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceChanged
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceDismissRequest
@@ -84,6 +84,7 @@ class ProductDetailViewModel(
             is OnProductDetailNameChanged -> setProductName(name = intent.name)
             OnNewCategory -> createNewCategory()
             OnSaveCategory -> upsertCategory()
+            OnHideEditCategory -> setCategoryNull()
             is OnEditCategory -> editCategory(intent.id)
             is OnSetProductCategory -> setCategory(intent.id)
             is OnCategoryNameChange -> setCategoryName(query = intent.categoryName)
@@ -226,6 +227,13 @@ class ProductDetailViewModel(
                 category = UiCategory(
                     name = ""
                 )
+            )
+        }
+    }
+    private fun setCategoryNull() {
+        _state.update {
+            it.copy(
+                category = null
             )
         }
     }

@@ -1,6 +1,5 @@
 package org.hotaku.listy.product.presentation.product_detail
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -23,11 +22,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.datetime.Clock
 import listy.composeapp.generated.resources.Res
 import listy.composeapp.generated.resources.add_listy
+import listy.composeapp.generated.resources.product_screen_add_category_dialog_title
+import listy.composeapp.generated.resources.product_screen_category_dialog_category_name_placeholder
 import listy.composeapp.generated.resources.product_screen_delete_dialog_confirm_delete
 import listy.composeapp.generated.resources.product_screen_delete_dialog_message
 import listy.composeapp.generated.resources.product_screen_delete_dialog_title
+import listy.composeapp.generated.resources.product_screen_rename_category_dialog_title
 import listy.composeapp.generated.resources.product_screen_the_item_is_sold
 import org.hotaku.listy.core.presentation.composables.AlertDialog
+import org.hotaku.listy.core.presentation.composables.InputDialog
 import org.hotaku.listy.core.presentation.composables.VerticalSpacer_16dp
 import org.hotaku.listy.core.presentation.grayText
 import org.hotaku.listy.product.presentation.UiProduct
@@ -39,6 +42,7 @@ import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenI
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnDoneClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnEditCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnHideDeleteDialog
+import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnHideEditCategory
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceChanged
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnImportanceDismissRequest
@@ -49,7 +53,6 @@ import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenI
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSaveClick
 import org.hotaku.listy.product.presentation.product_detail.ProductDetailScreenIntent.OnSetProductCategory
 import org.hotaku.listy.product.presentation.product_detail.composables.CategoryList
-import org.hotaku.listy.product.presentation.product_detail.composables.EditCategory
 import org.hotaku.listy.product.presentation.product_detail.composables.EditProduct
 import org.hotaku.listy.product.presentation.product_detail.composables.ProductDetailScreenScaffold
 import org.hotaku.listy.product.presentation.product_detail.composables.categories
@@ -108,6 +111,19 @@ fun ProductDetailScreenContent(
                 onConfirm = { onIntent(ProductDetailScreenIntent.OnDeleteProduct) },
             )
         }
+
+        state.category != null -> {
+            InputDialog(
+                title = state.category.id?.let {
+                    stringResource(Res.string.product_screen_rename_category_dialog_title)
+                } ?: stringResource(Res.string.product_screen_add_category_dialog_title),
+                value = state.category.name,
+                placeholder = stringResource(Res.string.product_screen_category_dialog_category_name_placeholder),
+                onValueChange = { onIntent(OnCategoryNameChange(categoryName = it)) },
+                onConfirm = { onIntent(OnSaveCategory) },
+                onDismissRequest = { onIntent(OnHideEditCategory) }
+            )
+        }
     }
 
     ProductDetailScreenScaffold(
@@ -155,25 +171,6 @@ fun ProductDetailScreenContent(
             )
 
             VerticalSpacer_16dp()
-
-            AnimatedVisibility(
-                visible = state.category != null
-            ) {
-                EditCategory(
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        top = 0.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    ),
-                    category = state.category,
-                    onCategoryNameChange = { name ->
-                        onIntent(OnCategoryNameChange(categoryName = name))
-                    },
-                    onSaveClick = { onIntent(OnSaveCategory) }
-                )
-
-            }
 
             EditProduct(
                 modifier = Modifier.padding(horizontal = 16.dp),

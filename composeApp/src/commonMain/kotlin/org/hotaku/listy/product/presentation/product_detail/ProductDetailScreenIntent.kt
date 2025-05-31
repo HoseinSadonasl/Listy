@@ -13,6 +13,7 @@ sealed interface ProductDetailScreenIntent {
     data class OnProductDetailDescriptionChanged(val description: String) : ProductDetailScreenIntent
     object OnNewCategory : ProductDetailScreenIntent
     object OnSaveCategory : ProductDetailScreenIntent
+    object OnHideEditCategory : ProductDetailScreenIntent
     data class OnEditCategory(val id: Int) : ProductDetailScreenIntent
     data class OnSetProductCategory(val id: Int) : ProductDetailScreenIntent
     data class OnCategoryNameChange(val categoryName: String) : ProductDetailScreenIntent
